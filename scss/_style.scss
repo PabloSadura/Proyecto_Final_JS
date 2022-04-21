@@ -1,0 +1,101 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.navbar{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #ffff;
+    padding: 15px;
+}
+.navbar a{
+    position: relative;
+    text-decoration: none;
+    color: inherit;
+}
+.link::before{
+    content: "";
+    position:absolute;
+    background: #ffff;
+    top: 18px;
+    width: 0%;
+    border: 1px solid #ffff;
+    border-radius: 10px 10px;
+    transition: all 1s ease;
+}
+.link:hover::before{
+    width: 100%;
+    border-color: blue;
+    background: blue;
+}
+.logo{
+    margin-right: 50px;
+}
+.logo::first-letter{
+    font-size: 30px;
+}
+.list{
+    list-style: none;
+    display: flex;
+    gap: 25px;
+}
+#toggler, .navbar label{
+    display: none;
+}
+@media screen and (max-width: 600px){
+    .menu{
+        width: 100%;
+        max-height: 0;
+        overflow: hidden;
+    }
+    .list{
+        flex-direction: column;
+        align-items: end;
+        padding:20px;
+    }
+    .navbar label{
+        display: inline-flex;
+        align-items: center;
+        cursor: pointer;
+    }
+    #toggler:checked ~ .menu{
+        max-height: 100%;
+    }
+}
+
+.cuadro_barras{
+    position: relative;
+    width: 22px;
+    height: 15px;
+}
+.barras{
+    position: absolute;
+    top: 5px;
+    width: 20px;
+    height: 2px;
+    background: black;
+}
+.barras::before{
+    content: "";
+    position:absolute;
+    width: 20px;
+    height: 2px;
+    background: black;
+    top: -5px;
+}
+.barras::after{
+    content: "";
+    position:absolute;
+    width: 20px;
+    height: 2px;
+    background: black;
+    top: 5px;
+}
+
+.img-inicio{
+    width: 100%;
+}
