@@ -11233,4 +11233,18 @@ textarea.form-control-lg {
   width: 100%;
 }
 
+.card_planes {
+  position: relative;
+  box-shadow: 0 0 5px 5px rgba(128, 128, 128, 0.3);
+  transition: all 0.5s ease;
+}
+
+.btn {
+  position: relative;
+  color: black;
+  border: 1px solid blue;
+  margin-left: 35%;
+  margin-bottom: 20px;
+}
+
 /*# sourceMappingURL=custom.css.map */

@@ -99,3 +99,19 @@
 .img-inicio{
     width: 100%;
 }
+
+.card_planes{
+    position: relative;
+    box-shadow: 0 0 5px 5px rgba($color: grey, $alpha: 0.3);
+    transition: all 0.5s ease;
+}
+// .card_planes:hover{
+//     transform: scale(1.1,1.1);
+// }
+.btn{
+    position: relative;
+    color:black;
+    border: 1px solid blue;
+    margin-left: 35% ;
+    margin-bottom: 20px;
+}
