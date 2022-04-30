@@ -22,6 +22,7 @@
              <li><a class="link" href="">Home</a></li>
              <li><a class="link" href="">About</a></li>
              <li><a class="link" href="">Contact</a></li>
+             <li><a class="" href=""><i class="bi bi-cart iconos"></i></a></li>
           </ul>
         </div>
       </nav>
@@ -40,9 +41,21 @@
             <h2 class="text-center p-4">Elegí tu plan</h2>
         </div>
         <div class="row pt-4 justify-content-around pb-4">
-            <div class="col-md-3 card_planes rounded-3"><h3 class="text-center pt-3">Basico</h3><h6 class="text-center p-3">ARS 385/mes (final)*</h6><p class="text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, tempore eius quod ipsam ratione necessitatibus ad cum harum ea quo recusandae quaerat quos cupiditate inventore maxime facilis nostrum iure unde dignissimos nemo doloremque nihil alias velit aliquid. Similique, iure in?</p><button class="btn">Contratar</button></div>
-            <div class="col-md-3 card_planes rounded-3"><h3 class="text-center pt-3">Intermedio</h3><h6 class="text-center p-3">ARS 880/mes (final)*</h6><p class="text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, tempore eius quod ipsam ratione necessitatibus ad cum harum ea quo recusandae quaerat quos cupiditate inventore maxime facilis nostrum iure unde dignissimos nemo doloremque nihil alias velit aliquid. Similique, iure in?</p><button class="btn">Contratar</button></div>
-            <div class="col-md-3 card_planes rounded-3"><h3 class="text-center pt-3">Premium</h3><h6 class="text-center p-3">ARS 1490/mes (final)*</h6><p class="text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, tempore eius quod ipsam ratione necessitatibus ad cum harum ea quo recusandae quaerat quos cupiditate inventore maxime facilis nostrum iure unde dignissimos nemo doloremque nihil alias velit aliquid. Similique, iure in?</p><button class="btn"><a class="text-decoration-none" href="">Contratar</a> </button></div>
+            <div class="col-md-3 card_planes rounded-3">
+                <h3 class="text-center pt-3">Basico</h3>
+                <h6 class="text-center p-3">ARS 385/mes (final)*</h6>
+                <p class="text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, tempore eius quod ipsam ratione necessitatibus ad cum harum ea quo recusandae quaerat quos cupiditate inventore maxime facilis nostrum iure unde dignissimos nemo doloremque nihil alias velit aliquid. Similique, iure in?</p>
+                <button class="btn" onclick="alertaBasico()">Contratar</button></div>
+            <div class="col-md-3 card_planes rounded-3">
+                <h3 class="text-center pt-3">Intermedio</h3>
+                <h6 class="text-center p-3">ARS 880/mes (final)*</h6>
+                <p class="text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, tempore eius quod ipsam ratione necessitatibus ad cum harum ea quo recusandae quaerat quos cupiditate inventore maxime facilis nostrum iure unde dignissimos nemo doloremque nihil alias velit aliquid. Similique, iure in?</p>
+                <button class="btn" onclick="alertaIntermedio()">Contratar</button></div>
+            <div class="col-md-3 card_planes rounded-3">
+                <h3 class="text-center pt-3">Premium</h3>
+                <h6 class="text-center p-3">ARS 1490/mes (final)*</h6>
+                <p class="text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, tempore eius quod ipsam ratione necessitatibus ad cum harum ea quo recusandae quaerat quos cupiditate inventore maxime facilis nostrum iure unde dignissimos nemo doloremque nihil alias velit aliquid. Similique, iure in?</p>
+                <button class="btn"  onclick="alertaPremium()">Contratar</button></div>
         </div>
         <div class="row">
             <p class="text-center">* El precio podría variar en caso de que el pago se realice en otras plataformas. Podrían aplicar cargos de terceros.</p>
