@@ -11991,7 +11991,7 @@ fieldset:disabled .btn {
   content: "";
   position: absolute;
   background: #ffff;
-  top: 18px;
+  top: 20px;
   width: 0%;
   border: 1px solid #ffff;
   border-radius: 10px 10px;
@@ -12021,7 +12021,8 @@ fieldset:disabled .btn {
   gap: 25px;
 }
 
-#toggler, .navbar label {
+#toggler,
+.navbar label {
   display: none;
 }
 
