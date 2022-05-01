@@ -1,10 +1,10 @@
-const meso = 40;
-const pil = 50;
-const depi = 20;
-const bot = 10;
-const basico = new sesiones(10, 5, 0, 10, 500);
-const intermedio = new sesiones(10, 5, 5, 15, 1500);
-const premium = new sesiones(20, 10, 10, 30, 3500);
+const meso = 550;
+const pil = 350;
+const depi = 450;
+const bot = 100;
+const basico = new sesiones(10, 5, 0, 10, 3500);
+const intermedio = new sesiones(10, 5, 5, 15, 5500);
+const premium = new sesiones(20, 10, 10, 30, 8500);
 const personalizado = new sesiones(0, 0, 0, 0, 0);
 
 let nombre = prompt("Ingresa tu nombre");
@@ -32,7 +32,7 @@ if (edad < 18) {
     case 1:
       alert(
         nombre +
-          ", has adquirido\n" +
+          ", has adquirido:\n\n" +
           basico.mesoterapia +
           " Mesoterapia\n" +
           basico.pilling +
@@ -40,7 +40,7 @@ if (edad < 18) {
           basico.botox +
           " Botox\n" +
           basico.depilacion +
-          " Depilación\n" +
+          " Depilación\n\n" +
           "Total: $" +
           basico.precio
       );
@@ -48,7 +48,7 @@ if (edad < 18) {
     case 2:
       alert(
         nombre +
-          ", has adquirido\n" +
+          ", has adquirido:\n\n" +
           intermedio.mesoterapia +
           " Mesoterapia\n" +
           intermedio.pilling +
@@ -56,7 +56,7 @@ if (edad < 18) {
           intermedio.botox +
           " Botox\n" +
           intermedio.depilacion +
-          " Depilación\n" +
+          " Depilación\n\n" +
           "Total: $" +
           intermedio.precio
       );
@@ -64,7 +64,7 @@ if (edad < 18) {
     case 3:
       alert(
         nombre +
-          ", has adquirido\n" +
+          ", has adquirido:\n\n" +
           premium.mesoterapia +
           " Mesoterapia\n" +
           premium.pilling +
@@ -72,20 +72,21 @@ if (edad < 18) {
           premium.botox +
           " Botox\n" +
           premium.depilacion +
-          " Depilación\n" +
+          " Depilación\n\n" +
           "Total: $" +
           premium.precio
       );
       break;
     case 4:
-      personalizado.precio =
-        meso * personalizado.mesoterapia +
-        pil * personalizado.pilling +
-        bot * personalizado.botox +
-        depi * personalizado.depilacion;
+      personalizado.precio = elegir(
+        personalizado.mesoterapia,
+        personalizado.pilling,
+        personalizado.botox,
+        personalizado.depilacion
+      );
       alert(
         nombre +
-          ", has adquirido\n" +
+          ", has adquirido:\n\n" +
           personalizado.mesoterapia +
           " Mesoterapia\n" +
           personalizado.pilling +
@@ -93,7 +94,7 @@ if (edad < 18) {
           personalizado.botox +
           " Botox\n" +
           personalizado.depilacion +
-          " Depilación\n" +
+          " Depilación\n\n" +
           "Total: $" +
           personalizado.precio
       );
@@ -104,11 +105,14 @@ if (edad < 18) {
 }
 alert("Gracias por su compra!");
 
+// objeto persona
 function persona(nombre, edad) {
   this.nombre = nombre;
   this.edad = edad;
   this.plan = null;
 }
+
+// Objeto sesiones
 
 function sesiones(mesoterapia, pilling, botox, depilacion, precio) {
   this.mesoterapia = mesoterapia;
@@ -118,11 +122,18 @@ function sesiones(mesoterapia, pilling, botox, depilacion, precio) {
   this.precio = precio;
 }
 
+// funcion que almacena la cantidad de sesiones segun la terapia
 function personal(terapia) {
   let res = parseFloat(prompt("Ingrese la cantidad de sesiones de " + terapia));
   return res;
 }
 
+function elegir(a, b, c, d) {
+  let res = meso * a + pil * b + bot * c + depi * d;
+  return res;
+}
+
+// Funciones onclic
 function alertaBasico() {
   alert("Gracias " + nombre + "\nAgregaste el paquete Básico al carrito");
 }
