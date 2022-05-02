@@ -11,98 +11,119 @@ let nombre = prompt("Ingresa tu nombre");
 alert("Bienvenido " + nombre);
 
 let edad = prompt("Ingrese su edad");
+let total = 0;
+
 if (edad < 18) {
   alert("Ud es menor de edad no puede comprar en este sitio");
 } else {
   const persona1 = new persona(nombre, edad);
-
   persona1.plan = parseFloat(
     prompt(
-      "Ingrese el plan: \n1.Basico\n2.Intermedio\n3.Premium\n4.Personalizado"
+      "Ingrese el plan: \n1.Basico\n2.Intermedio\n3.Premium\n4.Personalizado\n\n0.Salir"
     )
   );
-  if (persona1.plan === 4) {
-    personalizado.mesoterapia = personal("Mesoterapia");
-    personalizado.pilling = personal("Pilling");
-    personalizado.botox = personal("Botox");
-    personalizado.depilacion = personal("Depilación");
-  }
+  while (persona1.plan != 0) {
+    if (persona1.plan === 4) {
+      personalizado.mesoterapia = personal("Mesoterapia");
+      personalizado.pilling = personal("Pilling");
+      personalizado.botox = personal("Botox");
+      personalizado.depilacion = personal("Depilación");
+    }
 
-  switch (persona1.plan) {
-    case 1:
-      alert(
-        nombre +
-          ", has adquirido:\n\n" +
-          basico.mesoterapia +
-          " Mesoterapia\n" +
-          basico.pilling +
-          " Pilling\n" +
-          basico.botox +
-          " Botox\n" +
-          basico.depilacion +
-          " Depilación\n\n" +
-          "Total: $" +
-          basico.precio
+    switch (persona1.plan) {
+      case 1:
+        alert(
+          nombre +
+            ", has adquirido:\n\n" +
+            basico.mesoterapia +
+            " Mesoterapia\n" +
+            basico.pilling +
+            " Pilling\n" +
+            basico.botox +
+            " Botox\n" +
+            basico.depilacion +
+            " Depilación\n\n" +
+            "Total: $" +
+            basico.precio
+        );
+        total += basico.precio;
+
+        break;
+      case 2:
+        alert(
+          nombre +
+            ", has adquirido:\n\n" +
+            intermedio.mesoterapia +
+            " Mesoterapia\n" +
+            intermedio.pilling +
+            " Pilling\n" +
+            intermedio.botox +
+            " Botox\n" +
+            intermedio.depilacion +
+            " Depilación\n\n" +
+            "Total: $" +
+            intermedio.precio
+        );
+        total += intermedio.precio;
+        break;
+      case 3:
+        alert(
+          nombre +
+            ", has adquirido:\n\n" +
+            premium.mesoterapia +
+            " Mesoterapia\n" +
+            premium.pilling +
+            " Pilling\n" +
+            premium.botox +
+            " Botox\n" +
+            premium.depilacion +
+            " Depilación\n\n" +
+            "Total: $" +
+            premium.precio
+        );
+        total += premium.precio;
+        break;
+      case 4:
+        personalizado.precio = elegir(
+          personalizado.mesoterapia,
+          personalizado.pilling,
+          personalizado.botox,
+          personalizado.depilacion
+        );
+        alert(
+          nombre +
+            ", has adquirido:\n\n" +
+            personalizado.mesoterapia +
+            " Mesoterapia\n" +
+            personalizado.pilling +
+            " Pilling\n" +
+            personalizado.botox +
+            " Botox\n" +
+            personalizado.depilacion +
+            " Depilación\n\n" +
+            "Total: $" +
+            personalizado.precio
+        );
+        total += personalizado.precio;
+        break;
+      default:
+        alert("Ese plan no es valido");
+    }
+    let resp = parseFloat(
+      prompt("Desea adquirir un nuevo otro plan?\nMarque\n1. SI\n2. NO")
+    );
+    if (resp != 1) {
+      persona1.plan = 0;
+    } else {
+      persona1.plan = parseFloat(
+        prompt(
+          "Ingrese el plan: \n1.Basico\n2.Intermedio\n3.Premium\n4.Personalizado"
+        )
       );
-      break;
-    case 2:
-      alert(
-        nombre +
-          ", has adquirido:\n\n" +
-          intermedio.mesoterapia +
-          " Mesoterapia\n" +
-          intermedio.pilling +
-          " Pilling\n" +
-          intermedio.botox +
-          " Botox\n" +
-          intermedio.depilacion +
-          " Depilación\n\n" +
-          "Total: $" +
-          intermedio.precio
-      );
-      break;
-    case 3:
-      alert(
-        nombre +
-          ", has adquirido:\n\n" +
-          premium.mesoterapia +
-          " Mesoterapia\n" +
-          premium.pilling +
-          " Pilling\n" +
-          premium.botox +
-          " Botox\n" +
-          premium.depilacion +
-          " Depilación\n\n" +
-          "Total: $" +
-          premium.precio
-      );
-      break;
-    case 4:
-      personalizado.precio = elegir(
-        personalizado.mesoterapia,
-        personalizado.pilling,
-        personalizado.botox,
-        personalizado.depilacion
-      );
-      alert(
-        nombre +
-          ", has adquirido:\n\n" +
-          personalizado.mesoterapia +
-          " Mesoterapia\n" +
-          personalizado.pilling +
-          " Pilling\n" +
-          personalizado.botox +
-          " Botox\n" +
-          personalizado.depilacion +
-          " Depilación\n\n" +
-          "Total: $" +
-          personalizado.precio
-      );
-      break;
-    default:
-      alert("Ese plan no es valido");
+    }
   }
 }
+alert("El total de su compra es de: $" + total);
 alert("Gracias por su compra!");
 
 // objeto persona
