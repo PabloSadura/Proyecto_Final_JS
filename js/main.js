@@ -17,11 +17,9 @@ if (edad < 18) {
   alert("Ud es menor de edad no puede comprar en este sitio");
 } else {
   const persona1 = new persona(nombre, edad);
-  persona1.plan = parseFloat(
-    prompt(
-      "Ingrese el plan: \n1.Basico\n2.Intermedio\n3.Premium\n4.Personalizado\n\n0.Salir"
-    )
-  );
+
+  persona1.plan = planes();
+
   while (persona1.plan != 0) {
     if (persona1.plan === 4) {
       personalizado.mesoterapia = personal("Mesoterapia");
@@ -115,11 +113,7 @@ if (edad < 18) {
     if (resp != 1) {
       persona1.plan = 0;
     } else {
-      persona1.plan = parseFloat(
-        prompt(
-          "Ingrese el plan: \n1.Basico\n2.Intermedio\n3.Premium\n4.Personalizado"
-        )
-      );
+      persona1.plan = planes();
     }
   }
   alert("El total de su compra es de: $" + total);
@@ -147,6 +141,16 @@ function sesiones(mesoterapia, pilling, botox, depilacion, precio) {
 function personal(terapia) {
   let res = parseFloat(prompt("Ingrese la cantidad de sesiones de " + terapia));
   return res;
+}
+
+// Pregunta sobre los planes
+function planes() {
+  let plan = parseFloat(
+    prompt(
+      "Ingrese el plan: \n1.Basico\n2.Intermedio\n3.Premium\n4.Personalizado"
+    )
+  );
+  return plan;
 }
 
 function elegir(a, b, c, d) {
