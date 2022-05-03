@@ -122,9 +122,9 @@ if (edad < 18) {
       );
     }
   }
+  alert("El total de su compra es de: $" + total);
+  alert("Gracias por su compra!");
 }
-alert("El total de su compra es de: $" + total);
-alert("Gracias por su compra!");
 
 // objeto persona
 function persona(nombre, edad) {
