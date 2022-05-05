@@ -116,6 +116,7 @@ if (edad < 18) {
       persona1.plan = planes();
     }
   }
+  alert()
   alert("El total de su compra es de: $" + total);
   alert("Gracias por su compra!");
 }
@@ -167,4 +168,9 @@ function alertaIntermedio() {
 }
 function alertaPremium() {
   alert("Gracias " + nombre + "\nAgregaste el paquete Premium al carrito");
+}
+function alertaPersonalizado() {
+  alert(
+    "Gracias " + nombre + "\nAgregaste el paquete Personalizado al carrito"
+  );
 }
