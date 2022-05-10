@@ -54,10 +54,10 @@ if (quitar.toUpperCase() === "SI") {
   quitarCarrito(num - 1);
   contador--;
   sumarCarrito(planesElegidos, contador);
-} else if (num === 0) {
-  quitarTodo();
+  if (num === 0) {
+    quitarTodo();
+  }
 }
-
 alert("Gracias por visitarnos, vuelva pronto!");
 
 console.log(planesElegidos);
