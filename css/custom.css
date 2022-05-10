@@ -12102,8 +12102,9 @@ fieldset:disabled .btn {
   position: relative;
   color: black;
   border: 1px solid blue;
-  margin-left: 35%;
-  margin-bottom: 20px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   color: white;
   background: rgba(0, 0, 0, 0.5);
 }

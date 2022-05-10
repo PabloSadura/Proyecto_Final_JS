@@ -1,163 +1,168 @@
-const meso = 550;
-const pil = 350;
-const depi = 450;
-const bot = 100;
-const basico = new sesiones(10, 5, 0, 10, 3500);
-const intermedio = new sesiones(10, 5, 5, 15, 5500);
-const premium = new sesiones(20, 10, 10, 30, 8500);
-const personalizado = new sesiones(0, 0, 0, 0, 0);
+// objeto planes
+const arrayPlanes = [
+  new planes(1, "Plan Basico", 1, 5, 5, 0, 10, 35000),
+  new planes(2, "Plan Intermedio", 1, 10, 5, 5, 15, 55000),
+  new planes(3, "Plan Premium", 1, 20, 10, 10, 30, 85000),
+];
+const arraySesiones = [
+  new sesiones(4, "Mesoterapia", 1, 3500),
+  new sesiones(5, "Piling", 1, 2000),
+  new sesiones(6, "Botox", 1, 4000),
+  new sesiones(7, "Depilación", 1, 1500),
+];
 
-let nombre = prompt("Ingresa tu nombre");
-alert("Bienvenido " + nombre);
-let edad = parseFloat(prompt("Ingrese su edad"));
-let plan;
-let total = 0;
-const persona1 = new persona(nombre, edad);
+let tamanio;
+let idPlan;
+let idCarrito = 0;
+let seccion;
+let contador = 0;
+let planesElegidos = []; // array para el carrito
+const consultaPlan = arrayPlanes.concat(arraySesiones);
+let nombre = datosPersona(); // pido el nombre del usuario
 
-persona1.plan = planes();
+mostrarPlanes(consultaPlan);
+elegir = selectPlan(consultaPlan.length);
 
-if (persona1.plan != 0) {
-  while (persona1.plan < 0 || persona1.plan > 4) {
-    persona1.plan = planes();
+while (elegir != 0) {
+  idPlan = planSeleccionado(consultaPlan, elegir);
+  if (elegir > 3 && elegir < 8) {
+    sesionesAgregadas(idPlan);
   }
-}
-
-while (persona1.plan != 0) {
-  if (persona1.plan === 4) {
-    personalizado.mesoterapia = personal("Mesoterapia");
-    personalizado.pilling = personal("Pilling");
-    personalizado.botox = personal("Botox");
-    personalizado.depilacion = personal("Depilación");
+  let agregar = prompt("Desea agregarlo al carrito? SI -NO");
+  if (agregar.toUpperCase() === "SI") {
+    carrito(idPlan);
+    console.log(idPlan);
+    contador++;
   }
-
-  switch (persona1.plan) {
-    case 1:
-      alert(
-        nombre +
-          ", has adquirido:\n\n" +
-          basico.mesoterapia +
-          " Mesoterapia\n" +
-          basico.pilling +
-          " Pilling\n" +
-          basico.botox +
-          " Botox\n" +
-          basico.depilacion +
-          " Depilación\n\n" +
-          "Total: $" +
-          basico.precio
-      );
-      total += basico.precio;
-
-      break;
-    case 2:
-      alert(
-        nombre +
-          ", has adquirido:\n\n" +
-          intermedio.mesoterapia +
-          " Mesoterapia\n" +
-          intermedio.pilling +
-          " Pilling\n" +
-          intermedio.botox +
-          " Botox\n" +
-          intermedio.depilacion +
-          " Depilación\n\n" +
-          "Total: $" +
-          intermedio.precio
-      );
-      total += intermedio.precio;
-      break;
-    case 3:
-      alert(
-        nombre +
-          ", has adquirido:\n\n" +
-          premium.mesoterapia +
-          " Mesoterapia\n" +
-          premium.pilling +
-          " Pilling\n" +
-          premium.botox +
-          " Botox\n" +
-          premium.depilacion +
-          " Depilación\n\n" +
-          "Total: $" +
-          premium.precio
-      );
-      total += premium.precio;
-      break;
-    case 4:
-      personalizado.precio = elegir(
-        personalizado.mesoterapia,
-        personalizado.pilling,
-        personalizado.botox,
-        personalizado.depilacion
-      );
-      alert(
-        nombre +
-          ", has adquirido:\n\n" +
-          personalizado.mesoterapia +
-          " Mesoterapia\n" +
-          personalizado.pilling +
-          " Pilling\n" +
-          personalizado.botox +
-          " Botox\n" +
-          personalizado.depilacion +
-          " Depilación\n\n" +
-          "Total: $" +
-          personalizado.precio
-      );
-      total += personalizado.precio;
-      break;
-    default:
-      alert("Ese plan no es valido");
-  }
-
-  let resp = parseFloat(
-    prompt("Desea adquirir un nuevo otro plan?\nMarque\n1. SI\n2. NO")
-  );
-  if (resp === 1) {
-    persona1.plan = planes();
+  let agregarOtro = prompt("Desea agregar un nuevo plan? SI -NO");
+  if (agregarOtro.toUpperCase() === "SI") {
+    mostrarPlanes(consultaPlan);
+    elegir = selectPlan(consultaPlan.length);
   } else {
-    persona1.plan = 0;
+    elegir = 0;
   }
-  alert("El total de su compra es de: $" + total);
 }
-alert("Gracias vuelva pronto!");
+sumarCarrito(planesElegidos, contador);
 
-// objeto persona
-function persona(nombre, edad) {
-  this.nombre = nombre;
-  this.edad = edad;
-  this.plan = null;
+// Eliminar items
+let quitar = prompt("Desea quitar algun elemento del carrito? SI - NO");
+if (quitar.toUpperCase() === "SI") {
+  mostrarAgregados(planesElegidos);
+  let num = parseFloat(
+    prompt("Elegir un numero para eliminar o 0 para eliminar todos")
+  );
+  quitarCarrito(num - 1);
+  contador--;
+  sumarCarrito(planesElegidos, contador);
+} else if (num === 0) {
+  quitarTodo();
 }
 
-// Objeto sesiones
+alert("Gracias por visitarnos, vuelva pronto!");
 
-function sesiones(mesoterapia, pilling, botox, depilacion, precio) {
+console.log(planesElegidos);
+
+// Pido el dato de la persona
+function datosPersona() {
+  dato = prompt("Ingrese su nombre");
+  alert("Bienvenido " + dato);
+  return dato;
+}
+
+// Objeto Planes
+function planes(
+  id,
+  tipo,
+  cantidad,
+  mesoterapia,
+  pilling,
+  botox,
+  depilacion,
+  precio
+) {
+  this.id = id;
+  this.tipo = tipo;
+  this.cantidad = cantidad;
   this.mesoterapia = mesoterapia;
   this.pilling = pilling;
   this.botox = botox;
   this.depilacion = depilacion;
   this.precio = precio;
 }
-
-// funcion que almacena la cantidad de sesiones segun la terapia
-function personal(terapia) {
-  let res = parseFloat(prompt("Ingrese la cantidad de sesiones de " + terapia));
-  return res;
+// objeto sesiones
+function sesiones(id, tipo, cantidad, precio) {
+  this.id = id;
+  this.tipo = tipo;
+  this.cantidad = cantidad;
+  this.precio = precio;
 }
 
-// Pregunta sobre los planes
-function planes() {
-  let plan = parseFloat(
-    prompt(
-      "Ingrese el plan: \n1.Basico\n2.Intermedio\n3.Premium\n4.Personalizado\n0.Salir"
-    )
+// Muestro los planes almacenados en el array
+function mostrarPlanes(array) {
+  array.forEach((array) =>
+    console.log(array.id + ". " + array.tipo + " $" + array.precio)
   );
-  return plan;
+  console.log("0. Salir");
+}
+// seleccionar plan
+function selectPlan(tamanio) {
+  let tipoPlan = parseFloat(
+    prompt("Ingrese el n° del plan que desea consultar (mostrado por consola)")
+  );
+  while (tipoPlan < 0 || tipoPlan > tamanio) {
+    tipoPlan = parseFloat(
+      prompt(
+        "Ingrese el n° del plan que desea consultar (mostrado por consola)"
+      )
+    );
+  }
+  return tipoPlan;
 }
 
-function elegir(a, b, c, d) {
-  let res = meso * a + pil * b + bot * c + depi * d;
-  return res;
+// muestro las caracteristas del plan seleccionado por consola
+function planSeleccionado(array, dato) {
+  let result = array.find((el) => el.id === dato);
+  return result;
+}
+// agrego sesiones al plan elegido
+function sesionesAgregadas(array) {
+  array.cantidad = parseFloat(prompt("Ingrese la cantidad de sesiones"));
+}
+// sumar carrito
+function sumarCarrito(array, dato) {
+  let total = 0;
+  array.forEach((array) => {
+    total += array.cantidad * array.precio;
+  });
+
+  alert("Ud tiene " + dato + " en su carrito por un valor de $" + total);
+}
+
+// Carrito de compras
+function carrito(tipoPlan) {
+  idCarrito++;
+  tipoPlan["idc"] = idCarrito;
+  planesElegidos.push(tipoPlan);
+  return planesElegidos;
+}
+
+// funcion para validar los id de los objetos
+function validarId(array, id) {}
+
+// quitar elementos del carrito
+function quitarCarrito(num) {
+  planesElegidos.splice(num, 1);
+}
+// funcion para quitar todos los elementos
+function quitarTodo() {
+  planesElegidos.splice(0);
+  alert("El carrito se encuentra vacio");
+}
+// muestro los planes agregados al carrito
+function mostrarAgregados(planesElegidos) {
+  planesElegidos.forEach((element) => {
+    console.log(element);
+  });
 }
 
 // Funciones onclic
@@ -169,9 +174,4 @@ function alertaIntermedio() {
 }
 function alertaPremium() {
   alert("Gracias " + nombre + "\nAgregaste el paquete Premium al carrito");
-}
-function alertaPersonalizado() {
-  alert(
-    "Gracias " + nombre + "\nAgregaste el paquete Personalizado al carrito"
-  );
 }
