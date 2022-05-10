@@ -14,7 +14,7 @@ const arraySesiones = [
 let tamanio;
 let idPlan;
 let idCarrito = 0;
-let seccion;
+let totalFinal;
 let contador = 0;
 let planesElegidos = []; // array para el carrito
 const consultaPlan = arrayPlanes.concat(arraySesiones);
@@ -28,36 +28,39 @@ while (elegir != 0) {
   if (elegir > 3 && elegir < 8) {
     sesionesAgregadas(idPlan);
   }
-  let agregar = prompt("Desea agregarlo al carrito? SI -NO");
-  if (agregar.toUpperCase() === "SI") {
+  let agregar = confirm("Desea agregarlo al carrito? SI -NO");
+  if (agregar === true) {
     carrito(idPlan);
     console.log(idPlan);
     contador++;
   }
-  let agregarOtro = prompt("Desea agregar un nuevo plan? SI -NO");
-  if (agregarOtro.toUpperCase() === "SI") {
+  let agregarOtro = confirm("Desea agregar un nuevo plan? SI -NO");
+  if (agregarOtro === true) {
     mostrarPlanes(consultaPlan);
     elegir = selectPlan(consultaPlan.length);
   } else {
     elegir = 0;
   }
 }
-sumarCarrito(planesElegidos, contador);
+totalFinal = sumarCarrito(planesElegidos, contador);
 
 // Eliminar items
-let quitar = prompt("Desea quitar algun elemento del carrito? SI - NO");
-if (quitar.toUpperCase() === "SI") {
+let quitar = confirm("Desea quitar algun elemento del carrito? SI - NO");
+if (quitar === true) {
   mostrarAgregados(planesElegidos);
   let num = parseFloat(
     prompt("Elegir un numero para eliminar o 0 para eliminar todos")
   );
   quitarCarrito(num - 1);
   contador--;
-  sumarCarrito(planesElegidos, contador);
+  totalFinal = sumarCarrito(planesElegidos, contador);
   if (num === 0) {
     quitarTodo();
+    contador = 0;
+    totalFinal = sumarCarrito(planesElegidos, contador);
   }
 }
+alert("El monto a abonar es de: $" + totalFinal);
 alert("Gracias por visitarnos, vuelva pronto!");
 
 console.log(planesElegidos);
@@ -134,8 +137,7 @@ function sumarCarrito(array, dato) {
   array.forEach((array) => {
     total += array.cantidad * array.precio;
   });
-
-  alert("Ud tiene " + dato + " en su carrito por un valor de $" + total);
+  return total;
 }
 
 // Carrito de compras
@@ -145,9 +147,6 @@ function carrito(tipoPlan) {
   planesElegidos.push(tipoPlan);
   return planesElegidos;
 }
-
-// funcion para validar los id de los objetos
-function validarId(array, id) {}
 
 // quitar elementos del carrito
 function quitarCarrito(num) {
