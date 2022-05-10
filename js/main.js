@@ -22,45 +22,52 @@ let nombre = datosPersona(); // pido el nombre del usuario
 
 mostrarPlanes(consultaPlan);
 elegir = selectPlan(consultaPlan.length);
-
-while (elegir != 0) {
-  idPlan = planSeleccionado(consultaPlan, elegir);
-  if (elegir > 3 && elegir < 8) {
-    sesionesAgregadas(idPlan);
+if (elegir != 0) {
+  while (elegir != 0) {
+    idPlan = planSeleccionado(consultaPlan, elegir);
+    if (elegir > 3 && elegir < 8) {
+      sesionesAgregadas(idPlan);
+    }
+    let agregar = confirm("Desea agregarlo al carrito? Aceptar - Cancelar");
+    if (agregar === true) {
+      carrito(idPlan);
+      console.log(idPlan);
+      contador++;
+    }
+    let agregarOtro = confirm("Desea seguir comprando? Aceptar - Cancelar");
+    if (agregarOtro === true) {
+      mostrarPlanes(consultaPlan);
+      elegir = selectPlan(consultaPlan.length);
+    } else {
+      elegir = 0;
+    }
   }
-  let agregar = confirm("Desea agregarlo al carrito? SI -NO");
-  if (agregar === true) {
-    carrito(idPlan);
-    console.log(idPlan);
-    contador++;
-  }
-  let agregarOtro = confirm("Desea agregar un nuevo plan? SI -NO");
-  if (agregarOtro === true) {
-    mostrarPlanes(consultaPlan);
-    elegir = selectPlan(consultaPlan.length);
-  } else {
-    elegir = 0;
-  }
-}
-totalFinal = sumarCarrito(planesElegidos, contador);
-
-// Eliminar items
-let quitar = confirm("Desea quitar algun elemento del carrito? SI - NO");
-if (quitar === true) {
-  mostrarAgregados(planesElegidos);
-  let num = parseFloat(
-    prompt("Elegir un numero para eliminar o 0 para eliminar todos")
-  );
-  quitarCarrito(num - 1);
-  contador--;
   totalFinal = sumarCarrito(planesElegidos, contador);
-  if (num === 0) {
-    quitarTodo();
-    contador = 0;
+
+  // Eliminar items
+  let quitar = confirm(
+    "Desea quitar algun elemento del carrito? Aceptar - Cancelar"
+  );
+  if (quitar === true) {
+    mostrarAgregados(planesElegidos);
+    let num = parseFloat(
+      prompt("Elegir un numero para eliminar o 0 para eliminar todos")
+    );
+    quitarCarrito(num - 1);
+    contador--;
     totalFinal = sumarCarrito(planesElegidos, contador);
+    if (num === 0) {
+      quitarTodo();
+      contador = 0;
+      totalFinal = sumarCarrito(planesElegidos, contador);
+    }
+  }
+  let abonar = confirm("Desea abonar, oprima Aceptar.");
+  if (abonar === true) {
+    alert("El monto a abonar es de: $" + totalFinal);
   }
 }
-alert("El monto a abonar es de: $" + totalFinal);
+
 alert("Gracias por visitarnos, vuelva pronto!");
 
 console.log(planesElegidos);
