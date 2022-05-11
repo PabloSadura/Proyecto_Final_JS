@@ -33,7 +33,7 @@ if (elegir != 0) {
     let agregar = confirm("Desea agregarlo al carrito? Aceptar - Cancelar");
     if (agregar === true) {
       carrito(idPlan);
-      console.log(idPlan);
+      mostrarAgregados(planesElegidos);
       contador++;
     }
     let agregarOtro = confirm("Desea seguir comprando? Aceptar - Cancelar");
@@ -45,7 +45,10 @@ if (elegir != 0) {
     }
   }
   totalFinal = sumarCarrito(planesElegidos, contador);
-
+  let conf = confirm("Desea ver su carrito? Aceptar - Cancelar");
+  if (conf === true) {
+    mostrarAgregados(planesElegidos);
+  }
   // Eliminar items
   let quitar = confirm(
     "Desea quitar algun elemento del carrito? Aceptar - Cancelar"
@@ -169,6 +172,7 @@ function quitarTodo() {
 }
 // muestro los planes agregados al carrito
 function mostrarAgregados(planesElegidos) {
+  console.log("Carrito de compras");
   planesElegidos.forEach((element) => {
     console.log(
       "ID: " +
