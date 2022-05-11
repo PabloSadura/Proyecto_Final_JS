@@ -18,6 +18,8 @@ let totalFinal;
 let contador = 0;
 let planesElegidos = []; // array para el carrito
 const consultaPlan = arrayPlanes.concat(arraySesiones);
+alert("Abrir la consola para ver los planes y sesiones..");
+
 let nombre = datosPersona(); // pido el nombre del usuario
 
 mostrarPlanes(consultaPlan);
