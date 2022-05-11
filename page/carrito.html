@@ -32,18 +32,18 @@
     <main>
       <div class="container">
         <div class="row">
-          <div class="col d-flex flex-wrap justify-content-around">
-            <h2 class="col-12">Carrito</h2>
-            <div class="col-6 border d-flex flex-column pt-3">
-              <h4>Lista de productos</h4>
-              <div class="pt-4"></div>
-            </div>
-            <div class="col-4 border text-center align-self-end">
-              <button class="rounded bg-primary text-white">
-                Comprar Ahora!
-              </button>
-            </div>
-          </div>
+          <table class="table table-bordered table-hover" id="tabla">
+            <thead class="table-light">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Producto</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Total</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+            <tfoot></tfoot>
+          </table>
         </div>
       </div>
     </main>

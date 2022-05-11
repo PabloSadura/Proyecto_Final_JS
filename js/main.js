@@ -64,6 +64,7 @@ if (elegir != 0) {
   }
   let abonar = confirm("Desea abonar, oprima Aceptar.");
   if (abonar === true) {
+    mostrarAgregados(planesElegidos);
     alert("El monto a abonar es de: $" + totalFinal);
   }
 }
@@ -167,7 +168,14 @@ function quitarTodo() {
 // muestro los planes agregados al carrito
 function mostrarAgregados(planesElegidos) {
   planesElegidos.forEach((element) => {
-    console.log(element);
+    console.log(
+      "ID: " +
+        element.idc +
+        ". " +
+        element.tipo +
+        " $ " +
+        element.cantidad * element.precio
+    );
   });
 }
 
