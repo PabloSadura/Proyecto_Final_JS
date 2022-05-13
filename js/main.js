@@ -18,12 +18,10 @@ let totalFinal;
 let contador = 0;
 let planesElegidos = []; // array para el carrito
 const consultaPlan = arrayPlanes.concat(arraySesiones);
-alert("Abrir la consola para ver los planes y sesiones..");
 
 let nombre = datosPersona(); // pido el nombre del usuario
 
-mostrarPlanes(consultaPlan);
-elegir = selectPlan(consultaPlan.length);
+elegir = selectPlan(consultaPlan, consultaPlan.length);
 if (elegir != 0) {
   while (elegir != 0) {
     idPlan = planSeleccionado(consultaPlan, elegir);
@@ -38,8 +36,7 @@ if (elegir != 0) {
     }
     let agregarOtro = confirm("Desea seguir comprando? Aceptar - Cancelar");
     if (agregarOtro === true) {
-      mostrarPlanes(consultaPlan);
-      elegir = selectPlan(consultaPlan.length);
+      elegir = selectPlan(consultaPlan, consultaPlan.length);
     } else {
       elegir = 0;
     }
@@ -115,20 +112,28 @@ function sesiones(id, tipo, cantidad, precio) {
 
 // Muestro los planes almacenados en el array
 function mostrarPlanes(array) {
-  array.forEach((array) =>
-    console.log(array.id + ". " + array.tipo + " $" + array.precio)
-  );
-  console.log("0. Salir");
+  let texto = "";
+  array.forEach((array) => {
+    texto += `${array.id}. ${array.tipo} $${array.precio}\n`;
+  });
+  return texto;
 }
 // seleccionar plan
-function selectPlan(tamanio) {
+function selectPlan(array, tamanio) {
+  let texto = mostrarPlanes(array);
   let tipoPlan = parseFloat(
-    prompt("Ingrese el n° del plan que desea consultar (mostrado por consola)")
+    prompt(
+      "Ingrese el n° del plan que desea consultar (mostrado por consola)\n" +
+        texto +
+        "0. Salir"
+    )
   );
   while (tipoPlan < 0 || tipoPlan > tamanio) {
     tipoPlan = parseFloat(
       prompt(
-        "Ingrese el n° del plan que desea consultar (mostrado por consola)"
+        "Ingrese el n° del plan que desea consultar (mostrado por consola)\n" +
+          texto +
+          "0. Salir"
       )
     );
   }
