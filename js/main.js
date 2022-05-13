@@ -122,18 +122,12 @@ function mostrarPlanes(array) {
 function selectPlan(array, tamanio) {
   let texto = mostrarPlanes(array);
   let tipoPlan = parseFloat(
-    prompt(
-      "Ingrese el n° del plan que desea consultar (mostrado por consola)\n" +
-        texto +
-        "0. Salir"
-    )
+    prompt("Ingrese el n° del plan que desea consultar\n" + texto + "0. Salir")
   );
   while (tipoPlan < 0 || tipoPlan > tamanio) {
     tipoPlan = parseFloat(
       prompt(
-        "Ingrese el n° del plan que desea consultar (mostrado por consola)\n" +
-          texto +
-          "0. Salir"
+        "Ingrese el n° del plan que desea consultar\n" + texto + "0. Salir"
       )
     );
   }
