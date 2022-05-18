@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./css/custom.css" />
   </head>
   <body>
-    <header class="container-fluid">
+    <header class="conteiner-fluid sticky-top">
       <nav class="navbar">
         <a href="#" class="logo">Medicina Estética</a>
         <input type="checkbox" id="toggler" />
@@ -23,17 +23,18 @@
             <li><a class="link" href="">About</a></li>
             <li><a class="link" href="">Contact</a></li>
           </ul>
-          <div class="col d-flex justify-content-end">
-            <a class="" href="page/carrito.html"
-              ><i class="bi bi-cart icono"></i
+          <div class="col d-flex justify-content-evenly">
+            <div id="nombre" class="me-4"></div>
+            <a class="" href="#"
+              ><i class="bi bi-cart icono" id="carrito"></i
             ></a>
           </div>
         </div>
       </nav>
     </header>
     <main>
-      <div class="container-fluid">
-        <div class="row p-4">
+      <div class="conteiner-fluid">
+        <div class="row p-4 position-relative">
           <div class="col-md-6">
             <img
               class="img-inicio"
@@ -41,8 +42,9 @@
               alt=""
             />
           </div>
+
           <div class="col-md-6 align-self-center">
-            <div class="">
+            <div id="section">
               <h1 class="text-center">Medicina Estética</h1>
               <p class="text-md-center fs-6 fst-italic">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -54,27 +56,48 @@
           </div>
         </div>
       </div>
-      <div class="container-fluid">
+      <div class="conteiner-fluid">
         <div class="row mt-4">
           <h2 class="text-center">Planes a tu medida!</h2>
         </div>
-        <div class="row mt-4 text-center justify-content-evenly mb-4">
-          <div class="col-md-4 items1 card_planes rounded-3">
-            <h3 class="fs-2 fw-bolder pt-3">Planes</h3>
-            <div class="d-flex flex-column mt-4">
-              <button class="btn mb-4 mx-3 pt-3 pb-3">Plan Basico</button>
-              <button class="btn mb-4 mx-3 pt-3 pb-3">Plan Intermedio</button>
-              <button class="btn mb-4 mx-3 pt-3 pb-3">Plan Premium</button>
-            </div>
+        <div class="row mt-4 justify-content-evenly">
+          <div class="col-md-3 text-center card-planes">
+            <h4 class="fs-2">Plan Basico</h4>
+            <h5 class="fw-bolder">$35000</h5>
+            <ul>
+              <li>5 Sesiones de Mesoterapia</li>
+              <li>5 Sesiones de Botox</li>
+              <li>10 Sesiones de Depilación</li>
+            </ul>
+            <button type="submit" class="p-1 btn align-center" id="planBasico">
+              Agregar ->
+            </button>
           </div>
-          <div class="col-md-4 items3 card_planes rounded-3 f">
-            <h3 class="fs-2 fw-bolder pt-3">Sesiones Individuales</h3>
-            <div class="d-flex flex-column mt-4">
-              <button class="btn mb-3 mx-3 pt-2 pb-2">Mesoterapia</button>
-              <button class="btn mb-3 mx-3 pt-2 pb-2">Pilling</button>
-              <button class="btn mb-3 mx-3 pt-2 pb-2">Botox</button>
-              <button class="btn mb-3 mx-3 pt-2 pb-2">Depilación</button>
-            </div>
+          <div class="col-md-3 text-center card-planes">
+            <h4 class="fs-2">Plan Intermedio</h4>
+            <h5 class="fw-bolder">$55000</h5>
+            <ul>
+              <li>5 Sesiones de Mesoterapia</li>
+              <li>5 Sesiones de Botox</li>
+              <li>5 Sesiones de Pilling</li>
+              <li>10 Sesiones de Depilación</li>
+            </ul>
+            <button type="submit" class="p-1 btn align-center" id="planInter">
+              Agregar ->
+            </button>
+          </div>
+          <div class="col-md-3 text-center card-planes">
+            <h4 class="fs-2">Plan Premium</h4>
+            <h5 class="fw-bolder">$85000</h5>
+            <ul>
+              <li>10 Sesiones de Mesoterapia</li>
+              <li>10 Sesiones de Botox</li>
+              <li>10 Sesiones de Pilling</li>
+              <li>10 Sesiones de Depilación</li>
+            </ul>
+            <button type="submit" class="p-1 btn align-center" id="planPrem">
+              Agregar ->
+            </button>
           </div>
         </div>
       </div>

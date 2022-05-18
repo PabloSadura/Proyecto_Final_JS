@@ -1,4 +1,4 @@
-// objeto planes
+// // objeto planes
 const arrayPlanes = [
   new planes(1, "Plan Basico", 1, 5, 5, 0, 10, 35000),
   new planes(2, "Plan Intermedio", 1, 10, 5, 5, 15, 55000),
@@ -18,71 +18,16 @@ let totalFinal;
 let contador = 0;
 let planesElegidos = []; // array para el carrito
 const consultaPlan = arrayPlanes.concat(arraySesiones);
+let elegir = 0;
 
-let nombre = datosPersona(); // pido el nombre del usuario
-
-elegir = selectPlan(consultaPlan, consultaPlan.length);
-if (elegir != 0) {
-  while (elegir != 0) {
-    idPlan = planSeleccionado(consultaPlan, elegir);
-    if (elegir > 3 && elegir < 8) {
-      sesionesAgregadas(idPlan);
-    }
-    let agregar = confirm("Desea agregarlo al carrito? Aceptar - Cancelar");
-    if (agregar === true) {
-      carrito(idPlan);
-      mostrarAgregados(planesElegidos);
-      contador++;
-    }
-    let agregarOtro = confirm("Desea seguir comprando? Aceptar - Cancelar");
-    if (agregarOtro === true) {
-      elegir = selectPlan(consultaPlan, consultaPlan.length);
-    } else {
-      elegir = 0;
-    }
-  }
-  totalFinal = sumarCarrito(planesElegidos, contador);
-  let conf = confirm("Desea ver su carrito? Aceptar - Cancelar");
-  if (conf === true) {
-    mostrarAgregados(planesElegidos);
-  }
-  // Eliminar items
-  let quitar = confirm(
-    "Desea quitar algun elemento del carrito? Aceptar - Cancelar"
-  );
-  if (quitar === true) {
-    mostrarAgregados(planesElegidos);
-    let num = parseFloat(
-      prompt("Elegir un numero para eliminar o 0 para eliminar todos")
-    );
-    quitarCarrito(num - 1);
-    contador--;
-    totalFinal = sumarCarrito(planesElegidos, contador);
-    if (num === 0) {
-      quitarTodo();
-      contador = 0;
-      totalFinal = sumarCarrito(planesElegidos, contador);
-    }
-  }
-  let abonar = confirm("Desea abonar, oprima Aceptar.");
-  if (abonar === true) {
-    mostrarAgregados(planesElegidos);
-    alert("El monto a abonar es de: $" + totalFinal);
-  }
-}
-
-alert("Gracias por visitarnos, vuelva pronto!");
-
-console.log(planesElegidos);
-
-// Pido el dato de la persona
+// // Pido el dato de la persona
 function datosPersona() {
   dato = prompt("Ingrese su nombre");
-  alert("Bienvenido " + dato);
+  // alert("Bienvenido " + dato);
   return dato;
 }
 
-// Objeto Planes
+// // Objeto Planes
 function planes(
   id,
   tipo,
@@ -102,7 +47,7 @@ function planes(
   this.depilacion = depilacion;
   this.precio = precio;
 }
-// objeto sesiones
+// // objeto sesiones
 function sesiones(id, tipo, cantidad, precio) {
   this.id = id;
   this.tipo = tipo;
@@ -110,7 +55,7 @@ function sesiones(id, tipo, cantidad, precio) {
   this.precio = precio;
 }
 
-// Muestro los planes almacenados en el array
+// // Muestro los planes almacenados en el array
 function mostrarPlanes(array) {
   let texto = "";
   array.forEach((array) => {
@@ -118,33 +63,18 @@ function mostrarPlanes(array) {
   });
   return texto;
 }
-// seleccionar plan
-function selectPlan(array, tamanio) {
-  let texto = mostrarPlanes(array);
-  let tipoPlan = parseFloat(
-    prompt("Ingrese el n° del plan que desea consultar\n" + texto + "0. Salir")
-  );
-  while (tipoPlan < 0 || tipoPlan > tamanio) {
-    tipoPlan = parseFloat(
-      prompt(
-        "Ingrese el n° del plan que desea consultar\n" + texto + "0. Salir"
-      )
-    );
-  }
-  return tipoPlan;
-}
 
-// muestro las caracteristas del plan seleccionado por consola
+// // muestro las caracteristas del plan seleccionado por consola
 function planSeleccionado(array, dato) {
   let result = array.find((el) => el.id === dato);
   return result;
 }
-// agrego sesiones al plan elegido
+// // agrego sesiones al plan elegido
 function sesionesAgregadas(array) {
   array.cantidad = parseFloat(prompt("Ingrese la cantidad de sesiones"));
 }
 // sumar carrito
-function sumarCarrito(array, dato) {
+function sumarCarrito(array) {
   let total = 0;
   array.forEach((array) => {
     total += array.cantidad * array.precio;
@@ -152,45 +82,107 @@ function sumarCarrito(array, dato) {
   return total;
 }
 
-// Carrito de compras
+// // Carrito de compras
 function carrito(tipoPlan) {
   idCarrito++;
   tipoPlan["idc"] = idCarrito;
   planesElegidos.push(tipoPlan);
-  return planesElegidos;
 }
 
-// quitar elementos del carrito
-function quitarCarrito(num) {
-  planesElegidos.splice(num, 1);
-}
-// funcion para quitar todos los elementos
-function quitarTodo() {
-  planesElegidos.splice(0);
-  alert("El carrito se encuentra vacio");
-}
-// muestro los planes agregados al carrito
-function mostrarAgregados(planesElegidos) {
-  console.log("Carrito de compras");
-  planesElegidos.forEach((element) => {
-    console.log(
-      "ID: " +
-        element.idc +
-        ". " +
-        element.tipo +
-        " $ " +
-        element.cantidad * element.precio
-    );
-  });
+// // quitar elementos del carrito
+// function quitarCarrito(num) {
+//   planesElegidos.splice(num, 1);
+// }
+// // funcion para quitar todos los elementos
+// function quitarTodo() {
+//   planesElegidos.splice(0);
+//   // alert("El carrito se encuentra vacio");
+// }
+
+// Saludo personalizad
+let nombre = prompt("Ingrese su nombre");
+const ingreso = document.querySelector("#nombre");
+const mensaje = document.createElement("p");
+mensaje.innerHTML = `<p>Hola ${nombre}</p>`;
+ingreso.appendChild(mensaje);
+
+// Muestro la cantidad que hay en el carrito
+const carritos = document.querySelector("#carrito");
+const mostrarCant = document.createElement("span");
+function cantidadCarrito(contador) {
+  mostrarCant.innerHTML = `<span>${contador}</span>`;
+  carritos.appendChild(mostrarCant);
 }
 
-// Funciones onclic
-function alertaBasico() {
-  alert("Gracias " + nombre + "\nAgregaste el paquete Básico al carrito");
+const planBasic = document.querySelectorAll(".card-planes")[0];
+const planInter = document.querySelectorAll(".card-planes")[1];
+const planPrem = document.querySelectorAll(".card-planes")[2];
+function msjMostrado(text) {
+  let msj = `<p>${text.mesoterapia} - Mesoterapia</p>
+<p>${text.botox} - Botox</p>
+<p>${text.pilling} - Pilling</p>
+<p>${text.depilacion} - Depelación</p>`;
+  return msj;
 }
-function alertaIntermedio() {
-  alert("Gracias " + nombre + "\nAgregaste el paquete Intermedio al carrito");
-}
-function alertaPremium() {
-  alert("Gracias " + nombre + "\nAgregaste el paquete Premium al carrito");
-}
+
+planBasic.addEventListener("click", () => {
+  if (planBasic.style.height === "100%") {
+    planBasic.style.height = "85px";
+  } else {
+    planBasic.style.height = "100%";
+  }
+});
+
+planInter.addEventListener("click", () => {
+  if (planInter.style.height === "100%") {
+    planInter.style.height = "85px";
+  } else {
+    planInter.style.height = "100%";
+  }
+});
+planPrem.addEventListener("click", () => {
+  if (planPrem.style.height === "100%") {
+    planPrem.style.height = "85px";
+  } else {
+    planPrem.style.height = "100%";
+  }
+});
+
+const agregar1 = document.querySelector("#planBasico");
+const agregar2 = document.querySelector("#planInter");
+const agregar3 = document.querySelector("#planPrem");
+const confirmacion = document.createElement("div");
+confirmacion.innerHTML = `<div class="confirmacion"><p>Se agrego correctamente!</p></div>`;
+agregar1.addEventListener(
+  "click",
+  () => {
+    let tipoPlan = planSeleccionado(consultaPlan, 1);
+    carrito(tipoPlan);
+    planBasic.appendChild(confirmacion);
+    contador++;
+    cantidadCarrito(contador);
+  },
+  { once: true }
+);
+agregar2.addEventListener(
+  "click",
+  () => {
+    let tipoPlan = planSeleccionado(consultaPlan, 2);
+    carrito(tipoPlan);
+    planInter.appendChild(confirmacion);
+    contador++;
+    cantidadCarrito(contador);
+  },
+  { once: true }
+);
+agregar3.addEventListener(
+  "click",
+  () => {
+    let tipoPlan = planSeleccionado(consultaPlan, 3);
+    carrito(tipoPlan);
+    planPrem.appendChild(confirmacion);
+    contador++;
+    cantidadCarrito(contador);
+  },
+  { once: true }
+);

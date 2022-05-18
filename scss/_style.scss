@@ -102,10 +102,6 @@
   width: 100%;
 }
 
-.card_planes {
-  position: relative;
-  box-shadow: 0 0 3px 3px rgba($color: grey, $alpha: 0.3);
-}
 .btn {
   position: relative;
   color: black;
@@ -123,46 +119,45 @@
   font-size: 17px;
   color: black;
 }
-.items1 {
-  background-image: url(../img/botox.jpg);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-.items2 {
-  background-image: url(../img/pilling.jpg);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-.items3 {
-  background-image: url(../img/depilacion-definitiva.jpg);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-.items4 {
-  background-image: url(../img/mesoterapia-facial.jpg);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+
+ul {
+  list-style: none;
 }
 
-.card_planes::before {
-  content: "";
+#carrito span {
   position: absolute;
-  background: rgba($color: rgb(255, 255, 255), $alpha: 0.2);
+  text-align: center;
+  font-weight: bold;
+  top: -5px;
+  left: 5px;
+  font-size: 10px;
+  color: white;
+  background: red;
+  border-radius: 50%;
+  width: 15px;
+}
+
+.card-planes {
+  position: relative;
+  border: 1px solid rgb(155, 154, 154);
+  border-radius: 10px;
+  box-shadow: 2px 3px 10px rgba($color: #000000, $alpha: 0.5);
+  padding: 4px;
+  overflow: hidden;
+  height: 85px;
+  cursor: pointer;
+}
+
+.confirmacion {
+  position: absolute;
+  background: rgba($color: #000000, $alpha: 0.8);
+  color: white;
+  text-shadow: 1px 1px black;
   top: 0;
   left: 0;
+  border-radius: 10px;
   width: 100%;
   height: 100%;
-  z-index: 0;
-}
-
-h3,
-h6,
-p {
-  position: relative;
-  font-weight: 600;
-  z-index: 2;
+  text-align: center;
+  align-self: center;
 }
