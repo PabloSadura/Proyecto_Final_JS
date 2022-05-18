@@ -127,7 +127,7 @@ function msjMostrado(text) {
 
 planBasic.addEventListener("click", () => {
   if (planBasic.style.height === "100%") {
-    planBasic.style.height = "85px";
+    planBasic.style.height = "80px";
   } else {
     planBasic.style.height = "100%";
   }
@@ -135,14 +135,14 @@ planBasic.addEventListener("click", () => {
 
 planInter.addEventListener("click", () => {
   if (planInter.style.height === "100%") {
-    planInter.style.height = "85px";
+    planInter.style.height = "80px";
   } else {
     planInter.style.height = "100%";
   }
 });
 planPrem.addEventListener("click", () => {
   if (planPrem.style.height === "100%") {
-    planPrem.style.height = "85px";
+    planPrem.style.height = "80px";
   } else {
     planPrem.style.height = "100%";
   }
