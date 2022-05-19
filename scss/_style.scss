@@ -161,3 +161,26 @@ ul {
   text-align: center;
   align-self: center;
 }
+
+.contenedor-carrito {
+  position: absolute;
+  top: 25px;
+  right: 0;
+  background: white;
+  border: 1px solid rgb(197, 197, 197);
+  border-radius: 10px;
+  box-shadow: 1px 1px 5px rgba($color: #000000, $alpha: 0.5);
+  width: 500px;
+  visibility: hidden;
+}
+
+.item-carrito {
+  border: 1px solid;
+  border-radius: 10px;
+  box-shadow: 1px 1px 2px rgba($color: #000000, $alpha: 0.3);
+  margin: 5px;
+  padding: 5px;
+}
+.btn-carrito {
+  width: 20px;
+}

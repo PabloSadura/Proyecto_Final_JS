@@ -12159,4 +12159,30 @@ ul {
       -ms-grid-row-align: center;
       align-self: center;
 }
+
+.contenedor-carrito {
+  position: absolute;
+  top: 25px;
+  right: 0;
+  background: white;
+  border: 1px solid #c5c5c5;
+  border-radius: 10px;
+  -webkit-box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+          box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+  width: 500px;
+  visibility: hidden;
+}
+
+.item-carrito {
+  border: 1px solid;
+  border-radius: 10px;
+  -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+          box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  margin: 5px;
+  padding: 5px;
+}
+
+.btn-carrito {
+  width: 20px;
+}
 /*# sourceMappingURL=custom.css.map */

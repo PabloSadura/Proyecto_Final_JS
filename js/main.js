@@ -1,33 +1,4 @@
-// // objeto planes
-const arrayPlanes = [
-  new planes(1, "Plan Basico", 1, 5, 5, 0, 10, 35000),
-  new planes(2, "Plan Intermedio", 1, 10, 5, 5, 15, 55000),
-  new planes(3, "Plan Premium", 1, 20, 10, 10, 30, 85000),
-];
-const arraySesiones = [
-  new sesiones(4, "Mesoterapia", 1, 3500),
-  new sesiones(5, "Pilling", 1, 2000),
-  new sesiones(6, "Botox", 1, 4000),
-  new sesiones(7, "Depilación", 1, 1500),
-];
-
-let tamanio;
-let idPlan;
-let idCarrito = 0;
-let totalFinal;
-let contador = 0;
-let planesElegidos = []; // array para el carrito
-const consultaPlan = arrayPlanes.concat(arraySesiones);
-let elegir = 0;
-
-// // Pido el dato de la persona
-function datosPersona() {
-  dato = prompt("Ingrese su nombre");
-  // alert("Bienvenido " + dato);
-  return dato;
-}
-
-// // Objeto Planes
+// Objeto Planes
 function planes(
   id,
   tipo,
@@ -54,11 +25,24 @@ function sesiones(id, tipo, cantidad, precio) {
   this.cantidad = cantidad;
   this.precio = precio;
 }
+// array planes
+const arrayPlanes = [
+  new planes(1, "Plan Basico", 1, 5, 5, 0, 10, 35000),
+  new planes(2, "Plan Intermedio", 1, 10, 5, 5, 15, 55000),
+  new planes(3, "Plan Premium", 1, 20, 10, 10, 30, 85000),
+];
+const arraySesiones = [
+  new sesiones(4, "Mesoterapia", 1, 3500),
+  new sesiones(5, "Pilling", 1, 2000),
+  new sesiones(6, "Botox", 1, 4000),
+  new sesiones(7, "Depilación", 1, 1500),
+];
 
-// // agrego sesiones al plan elegido
-function sesionesAgregadas(array) {
-  array.cantidad = parseFloat(prompt("Ingrese la cantidad de sesiones"));
-}
+let totalFinal;
+let contador = 0;
+let planesElegidos = []; // array para el carrito
+const consultaPlan = arrayPlanes.concat(arraySesiones);
+
 // sumar carrito
 function sumarCarrito(array) {
   let total = 0;
@@ -67,22 +51,10 @@ function sumarCarrito(array) {
   });
   return total;
 }
-
 // // Carrito de compras
 function carrito(tipoPlan) {
-  idCarrito++;
   planesElegidos.push(tipoPlan);
 }
-
-// // quitar elementos del carrito
-// function quitarCarrito(num) {
-//   planesElegidos.splice(num, 1);
-// }
-// // funcion para quitar todos los elementos
-// function quitarTodo() {
-//   planesElegidos.splice(0);
-//   // alert("El carrito se encuentra vacio");
-// }
 
 // Saludo personalizado
 let nombre = prompt("Ingrese su nombre");
@@ -98,7 +70,37 @@ function cantidadCarrito(contador) {
   mostrarCant.innerHTML = `<span>${contador}</span>`;
   carritos.appendChild(mostrarCant);
 }
-const d = document;
+// mostrar carrito con productos
+const mostrarItems = document.querySelector(".contenedor-carrito");
+const items = document.querySelector("#tabla");
+const mostrarItem = document.createElement("div");
+
+function mostrarCarrito() {
+  items.innerHTML = "";
+  planesElegidos.forEach((el) => {
+    items.innerHTML += `<th scope="row text-center">${el.id}</th>
+    <td>${el.tipo}</td>
+    <td class="text-center"><input type="submit" value="-" class="btn-carrito me-1">  ${el.cantidad}  <input type="submit" value="+" class="btn-carrito ms-1"></td>
+    <td>$${el.precio}</td>
+    <td><i class="bi bi-trash"></i></td>`;
+  });
+  mostrarItems.appendChild(mostrarItem);
+  totalFinal = sumarCarrito(planesElegidos);
+  mostrarItem.innerHTML = `<div class="d-flex justify-content-evenly">Total
+  <a href="#" class="text-decoration-underline" id="eliminarTodo">Eliminar Todo</a>
+  <p>$${totalFinal}</p>
+  </div>`;
+}
+// abro el carrito
+carritos.addEventListener("click", () => {
+  if (mostrarItems.style.visibility === "visible") {
+    mostrarItems.style.visibility = "hidden";
+  } else {
+    mostrarItems.style.visibility = "visible";
+    mostrarCarrito();
+  }
+});
+
 const planesVigentes = document.querySelector("#menu-planes");
 const $planes = document.querySelector("#planes");
 const $sesiones = document.querySelector("#sesiones");
@@ -132,12 +134,20 @@ const mostrarSesiones = () => {
   });
 };
 mostrarSesiones();
-
+function itemRepetido(idElegido) {
+  let result = planesElegidos.find((el) => el.id === idElegido);
+  return result;
+}
 // agrego planes al carrito
 consultaPlan.forEach((listas, index) => {
   document.querySelector(`.btn${index + 1}`).addEventListener("click", () => {
-    carrito(listas);
-    contador++;
-    cantidadCarrito(contador);
+    let result = itemRepetido(index + 1);
+    if (!result) {
+      carrito(listas);
+      contador++;
+      cantidadCarrito(contador);
+    } else {
+      result.cantidad++;
+    }
   });
 });
