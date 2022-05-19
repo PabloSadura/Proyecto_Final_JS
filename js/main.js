@@ -6,7 +6,7 @@ const arrayPlanes = [
 ];
 const arraySesiones = [
   new sesiones(4, "Mesoterapia", 1, 3500),
-  new sesiones(5, "Piling", 1, 2000),
+  new sesiones(5, "Pilling", 1, 2000),
   new sesiones(6, "Botox", 1, 4000),
   new sesiones(7, "Depilación", 1, 1500),
 ];
@@ -55,20 +55,6 @@ function sesiones(id, tipo, cantidad, precio) {
   this.precio = precio;
 }
 
-// // Muestro los planes almacenados en el array
-function mostrarPlanes(array) {
-  let texto = "";
-  array.forEach((array) => {
-    texto += `${array.id}. ${array.tipo} $${array.precio}\n`;
-  });
-  return texto;
-}
-
-// // muestro las caracteristas del plan seleccionado por consola
-function planSeleccionado(array, dato) {
-  let result = array.find((el) => el.id === dato);
-  return result;
-}
 // // agrego sesiones al plan elegido
 function sesionesAgregadas(array) {
   array.cantidad = parseFloat(prompt("Ingrese la cantidad de sesiones"));
@@ -85,7 +71,6 @@ function sumarCarrito(array) {
 // // Carrito de compras
 function carrito(tipoPlan) {
   idCarrito++;
-  tipoPlan["idc"] = idCarrito;
   planesElegidos.push(tipoPlan);
 }
 
@@ -99,7 +84,7 @@ function carrito(tipoPlan) {
 //   // alert("El carrito se encuentra vacio");
 // }
 
-// Saludo personalizad
+// Saludo personalizado
 let nombre = prompt("Ingrese su nombre");
 const ingreso = document.querySelector("#nombre");
 const mensaje = document.createElement("p");
@@ -113,76 +98,46 @@ function cantidadCarrito(contador) {
   mostrarCant.innerHTML = `<span>${contador}</span>`;
   carritos.appendChild(mostrarCant);
 }
+const d = document;
+const planesVigentes = document.querySelector("#menu-planes");
+const $planes = document.querySelector("#planes");
+const $sesiones = document.querySelector("#sesiones");
 
-const planBasic = document.querySelectorAll(".card-planes")[0];
-const planInter = document.querySelectorAll(".card-planes")[1];
-const planPrem = document.querySelectorAll(".card-planes")[2];
-function msjMostrado(text) {
-  let msj = `<p>${text.mesoterapia} - Mesoterapia</p>
-<p>${text.botox} - Botox</p>
-<p>${text.pilling} - Pilling</p>
-<p>${text.depilacion} - Depelación</p>`;
-  return msj;
-}
+// Muestro los planes
+const mostrarPlanes = () => {
+  arrayPlanes.forEach((el) => {
+    $planes.innerHTML += `<div class="col-md-3 mt-4 card-planes">
+    <h4 class="text-center">${el.tipo}</h4>
+    <h5 class="text-center">$${el.precio}</h5>
+    <ul>
+    <li>${el.mesoterapia} sesiones de Mesoterapia</li>
+    <li>${el.botox} sesiones de Botox</li>
+    <li>${el.pilling} sesiones de Pilling</li>
+    <li>${el.depilacion} sesiones de Depilación</li>
+    </ul>
+    <div class="text-center">
+    <button class="btn btn${el.id}">Agregar</button></div>
+    </div>`;
+  });
+};
+mostrarPlanes();
 
-planBasic.addEventListener("click", () => {
-  if (planBasic.style.height === "100%") {
-    planBasic.style.height = "80px";
-  } else {
-    planBasic.style.height = "100%";
-  }
-});
+// Muestro las sesiones
+const mostrarSesiones = () => {
+  arraySesiones.forEach((el) => {
+    $sesiones.innerHTML += `<div class="col-md-2 mt-4 me-1 card-planes">
+        <h4 class="text-center">${el.tipo}</h4>
+        <h5 class="text-center">$${el.precio} x sesión</h5>
+        <div class="text-center"><button class="btn btn${el.id}">Agregar</button></div>`;
+  });
+};
+mostrarSesiones();
 
-planInter.addEventListener("click", () => {
-  if (planInter.style.height === "100%") {
-    planInter.style.height = "80px";
-  } else {
-    planInter.style.height = "100%";
-  }
-});
-planPrem.addEventListener("click", () => {
-  if (planPrem.style.height === "100%") {
-    planPrem.style.height = "80px";
-  } else {
-    planPrem.style.height = "100%";
-  }
-});
-
-const agregar1 = document.querySelector("#planBasico");
-const agregar2 = document.querySelector("#planInter");
-const agregar3 = document.querySelector("#planPrem");
-const confirmacion = document.createElement("div");
-confirmacion.innerHTML = `<div class="confirmacion"><p>Se agrego correctamente!</p></div>`;
-agregar1.addEventListener(
-  "click",
-  () => {
-    let tipoPlan = planSeleccionado(consultaPlan, 1);
-    carrito(tipoPlan);
-    planBasic.appendChild(confirmacion);
+// agrego planes al carrito
+consultaPlan.forEach((listas, index) => {
+  document.querySelector(`.btn${index + 1}`).addEventListener("click", () => {
+    carrito(listas);
     contador++;
     cantidadCarrito(contador);
-  },
-  { once: true }
-);
-agregar2.addEventListener(
-  "click",
-  () => {
-    let tipoPlan = planSeleccionado(consultaPlan, 2);
-    carrito(tipoPlan);
-    planInter.appendChild(confirmacion);
-    contador++;
-    cantidadCarrito(contador);
-  },
-  { once: true }
-);
-agregar3.addEventListener(
-  "click",
-  () => {
-    let tipoPlan = planSeleccionado(consultaPlan, 3);
-    carrito(tipoPlan);
-    planPrem.appendChild(confirmacion);
-    contador++;
-    cantidadCarrito(contador);
-  },
-  { once: true }
-);
+  });
+});

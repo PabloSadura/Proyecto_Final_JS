@@ -12103,6 +12103,7 @@ fieldset:disabled .btn {
           align-items: center;
   color: white;
   background: rgba(0, 0, 0, 0.5);
+  font-size: 1em;
 }
 
 .btn:hover {
@@ -12140,7 +12141,6 @@ ul {
           box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.5);
   padding: 4px;
   overflow: hidden;
-  height: 80px;
   cursor: pointer;
 }
 

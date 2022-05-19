@@ -9,28 +9,32 @@
   </head>
   <body>
     <header class="conteiner-fluid sticky-top">
-      <nav class="navbar">
-        <a href="#" class="logo">Medicina Estética</a>
-        <input type="checkbox" id="toggler" />
-        <label for="toggler">
-          <div class="cuadro_barras">
-            <div class="barras"></div>
+      <div class="row">
+        <nav class="navbar">
+          <a href="#" class="logo">Medicina Estética</a>
+          <input type="checkbox" id="toggler" />
+          <label for="toggler">
+            <div class="cuadro_barras">
+              <div class="barras"></div>
+            </div>
+          </label>
+          <div class="menu">
+            <div>
+              <ul class="list p-1">
+                <li><a class="link" href="">Home</a></li>
+                <li><a class="link" href="">About</a></li>
+                <li><a class="link" href="">Contact</a></li>
+              </ul>
+            </div>
+            <div class="col me-4 d-flex">
+              <div id="nombre" class="me-4"></div>
+              <a class="" href="#"
+                ><i class="bi bi-cart icono" id="carrito"></i
+              ></a>
+            </div>
           </div>
-        </label>
-        <div class="menu">
-          <ul class="list p-1">
-            <li><a class="link" href="">Home</a></li>
-            <li><a class="link" href="">About</a></li>
-            <li><a class="link" href="">Contact</a></li>
-          </ul>
-          <div class="col d-flex justify-content-evenly">
-            <div id="nombre" class="me-4"></div>
-            <a class="" href="#"
-              ><i class="bi bi-cart icono" id="carrito"></i
-            ></a>
-          </div>
-        </div>
-      </nav>
+        </nav>
+      </div>
     </header>
     <main>
       <div class="conteiner-fluid">
@@ -42,7 +46,6 @@
               alt=""
             />
           </div>
-
           <div class="col-md-6 align-self-center">
             <div id="section">
               <h1 class="text-center">Medicina Estética</h1>
@@ -56,49 +59,26 @@
           </div>
         </div>
       </div>
-      <div class="conteiner-fluid">
+      <div class="conteiner">
         <div class="row mt-4">
           <h2 class="text-center">Planes a tu medida!</h2>
         </div>
-        <div class="row mt-4 justify-content-evenly">
-          <div class="col-md-3 text-center card-planes mt-4">
-            <h4 class="fs-2">Plan Basico</h4>
-            <h5 class="fw-bolder">$35000</h5>
-            <ul>
-              <li>5 Sesiones de Mesoterapia</li>
-              <li>5 Sesiones de Botox</li>
-              <li>10 Sesiones de Depilación</li>
-            </ul>
-            <button type="submit" class="p-1 btn align-center" id="planBasico">
-              Agregar ->
-            </button>
-          </div>
-          <div class="col-md-3 text-center card-planes mt-4">
-            <h4 class="fs-2">Plan Intermedio</h4>
-            <h5 class="fw-bolder">$55000</h5>
-            <ul>
-              <li>5 Sesiones de Mesoterapia</li>
-              <li>5 Sesiones de Botox</li>
-              <li>5 Sesiones de Pilling</li>
-              <li>10 Sesiones de Depilación</li>
-            </ul>
-            <button type="submit" class="p-1 btn align-center" id="planInter">
-              Agregar ->
-            </button>
-          </div>
-          <div class="col-md-3 text-center card-planes mt-4">
-            <h4 class="fs-2">Plan Premium</h4>
-            <h5 class="fw-bolder">$85000</h5>
-            <ul>
-              <li>10 Sesiones de Mesoterapia</li>
-              <li>10 Sesiones de Botox</li>
-              <li>10 Sesiones de Pilling</li>
-              <li>10 Sesiones de Depilación</li>
-            </ul>
-            <button type="submit" class="p-1 btn align-center" id="planPrem">
-              Agregar ->
-            </button>
-          </div>
+      </div>
+      <div class="conteiner" id="menu-planes">
+        <div class="row">
+          <section
+            class="d-flex justify-content-evenly mb-4"
+            id="planes"
+          ></section>
+        </div>
+        <div class="row mt-4">
+          <h2 class="text-center">Sesiones Individuales!</h2>
+        </div>
+        <div class="row">
+          <section
+            class="d-flex justify-content-around"
+            id="sesiones"
+          ></section>
         </div>
       </div>
     </main>
