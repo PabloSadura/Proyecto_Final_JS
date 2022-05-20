@@ -40,7 +40,6 @@ const arraySesiones = [
 
 let totalFinal;
 let contador = 0;
-let idc = 0;
 let planesElegidos = []; // array para el carrito
 const consultaPlan = arrayPlanes.concat(arraySesiones);
 
@@ -54,9 +53,7 @@ function sumarCarrito(array) {
 }
 // // Carrito de compras
 function carrito(tipoPlan) {
-  tipoPlan["idc"] = idc;
   planesElegidos.push(tipoPlan);
-  idc++;
 }
 
 // Saludo personalizado
@@ -69,33 +66,11 @@ ingreso.appendChild(mensaje);
 // Muestro la cantidad que hay en el carrito
 const carritos = document.querySelector("#carrito");
 const mostrarCant = document.createElement("span");
-function cantidadCarrito(contador) {
-  mostrarCant.innerHTML = `<span>${contador}</span>`;
-  carritos.appendChild(mostrarCant);
-}
+
 // mostrar carrito con productos
 const mostrarItems = document.querySelector(".contenedor-carrito");
 const items = document.querySelector("#tabla");
 const mostrarItem = document.createElement("div");
-
-function mostrarCarrito() {
-  items.innerHTML = "";
-  planesElegidos.forEach((el) => {
-    items.innerHTML += `<th scope="row text-center">${el.id}</th>
-    <td>${el.tipo}</td>
-    <td class="text-center"><input type="submit" value="-" class="btn-carrito me-1 resta" data-id="${el.id}">  ${el.cantidad}  <input type="submit" value="+" class="btn-carrito ms-1 suma" data-id="${el.id}"></td>
-    <td>$${el.precio}</td>
-    <td><i class="bi bi-trash trash"data-id="${el.id}"></i></td>`;
-  });
-  mostrarItems.appendChild(mostrarItem);
-  totalFinal = sumarCarrito(planesElegidos);
-  mostrarItem.innerHTML = `<div class="d-flex justify-content-evenly">Total
-  <a href="#" class="text-decoration-underline" id="eliminarTodo">Eliminar Todo</a>
-  <p>$${totalFinal}</p>
-  </div>`;
-}
-
-// abro el carrito
 
 const planesVigentes = document.querySelector("#menu-planes");
 const $planes = document.querySelector("#planes");
@@ -150,6 +125,7 @@ consultaPlan.forEach((listas, index) => {
   mostrarCarrito();
 });
 
+// listener generales
 document.addEventListener("click", (e) => {
   abrirCarrito(e);
   quitarCant(e);
@@ -157,6 +133,11 @@ document.addEventListener("click", (e) => {
   quitarElemento(e);
   eliminarTodo(e);
 });
+function cantidadCarrito(contador) {
+  mostrarCant.innerHTML = `<span>${contador}</span>`;
+  carritos.appendChild(mostrarCant);
+}
+
 function abrirCarrito(e) {
   if (e.target.matches("#carrito")) {
     if (mostrarItems.style.visibility === "visible") {
@@ -166,6 +147,23 @@ function abrirCarrito(e) {
       mostrarCarrito();
     }
   }
+}
+
+function mostrarCarrito() {
+  items.innerHTML = "";
+  planesElegidos.forEach((el) => {
+    items.innerHTML += `<th scope="row text-center">${el.id}</th>
+      <td>${el.tipo}</td>
+      <td class="text-center"><input type="submit" value="-" class="btn-carrito me-1 resta" data-id="${el.id}">  ${el.cantidad}  <input type="submit" value="+" class="btn-carrito ms-1 suma" data-id="${el.id}"></td>
+      <td>$${el.precio}</td>
+      <td><i class="bi bi-trash trash"data-id="${el.id}"></i></td>`;
+  });
+  mostrarItems.appendChild(mostrarItem);
+  totalFinal = sumarCarrito(planesElegidos);
+  mostrarItem.innerHTML = `<div class="d-flex justify-content-evenly">Total
+    <a href="#" class="text-decoration-underline" id="eliminarTodo">Eliminar Todo</a>
+    <p>$${totalFinal}</p>
+    </div>`;
 }
 
 function quitarCant(e) {
@@ -194,21 +192,20 @@ function agregarCant(e) {
 
 function quitarElemento(e) {
   if (e.target.matches(".trash")) {
-    const p = planesElegidos.find(
-      (el) => el.id === Number(e.target.dataset.id)
-    );
-    planesElegidos.splice(p.idc, 1);
+    console.log(planesElegidos);
+    let p = planesElegidos.find((el) => el.id === Number(e.target.dataset.id));
+    p = planesElegidos.filter((item) => item.id !== p.id);
+    planesElegidos = p;
+    console.log(planesElegidos);
     contador--;
-    p.idc--;
     mostrarCarrito();
+    cantidadCarrito(contador);
   }
 }
-
 function eliminarTodo(e) {
   if (e.target.matches("#eliminarTodo")) {
     planesElegidos.splice(0);
     contador = 0;
-    idc = 0;
     mostrarCarrito();
     cantidadCarrito(contador);
   }
