@@ -192,11 +192,9 @@ function agregarCant(e) {
 
 function quitarElemento(e) {
   if (e.target.matches(".trash")) {
-    console.log(planesElegidos);
     let p = planesElegidos.find((el) => el.id === Number(e.target.dataset.id));
     p = planesElegidos.filter((item) => item.id !== p.id);
     planesElegidos = p;
-    console.log(planesElegidos);
     contador--;
     mostrarCarrito();
     cantidadCarrito(contador);
