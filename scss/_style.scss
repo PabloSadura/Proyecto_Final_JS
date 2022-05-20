@@ -105,15 +105,15 @@
 .btn {
   position: relative;
   color: black;
-  border: 1px solid blue;
+  border: 1px solid rgb(178, 178, 211);
   align-items: center;
   color: white;
   background: rgba($color: #000000, $alpha: 0.5);
-  font-size: 1em;
+  font-size: 0.6em;
 }
 .btn:hover {
   color: white;
-  background: blue;
+  background: rgb(178, 178, 211);
 }
 
 .icono {
@@ -183,4 +183,13 @@ ul {
 }
 .btn-carrito {
   width: 20px;
+}
+#nombre {
+  cursor: pointer;
+}
+#form {
+  background: white;
+  border: 1px solid gainsboro;
+  box-shadow: 1px 1px 4px rgba($color: #000000, $alpha: 0.3);
+  z-index: 2;
 }

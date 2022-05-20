@@ -56,13 +56,6 @@ function carrito(tipoPlan) {
   planesElegidos.push(tipoPlan);
 }
 
-// Saludo personalizado
-let nombre = prompt("Ingrese su nombre");
-const ingreso = document.querySelector("#nombre");
-const mensaje = document.createElement("p");
-mensaje.innerHTML = `<p>Hola ${nombre}</p>`;
-ingreso.appendChild(mensaje);
-
 // Muestro la cantidad que hay en el carrito
 const carritos = document.querySelector("#carrito");
 const mostrarCant = document.createElement("span");
@@ -133,6 +126,7 @@ document.addEventListener("click", (e) => {
   quitarElemento(e);
   eliminarTodo(e);
 });
+
 function cantidadCarrito(contador) {
   mostrarCant.innerHTML = `<span>${contador}</span>`;
   carritos.appendChild(mostrarCant);
