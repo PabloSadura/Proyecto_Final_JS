@@ -249,6 +249,7 @@ function recogerDatos(e) {
 const saludo = document.querySelector("#bienvenida");
 const power = document.querySelector("#power");
 
+// funcion para activar el power de cierra de sesion
 function powerAdd() {
   if (saludo.id === "cerrar") {
     power.classList.remove("visually-hidden");
