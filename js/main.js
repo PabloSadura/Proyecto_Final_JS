@@ -147,7 +147,7 @@ function mostrarCarrito() {
   items.innerHTML = "";
   if (saludo.id === "cerrar") {
     let copia = traerCarritoStorage();
-    if (copia !== 0) {
+    if (copia.length !== 0) {
       planesElegidos = traerCarritoStorage();
       contador = cantidadStorage();
       cantidadCarrito(contador);
@@ -199,17 +199,15 @@ function quitarElemento(e) {
     p = planesElegidos.filter((item) => item.id !== p.id);
     planesElegidos = p;
     contador--;
-    agregarCarritoStorage();
     mostrarCarrito();
     cantidadCarrito(contador);
   }
+  agregarCarritoStorage();
 }
-// corregir eliminar todo del storage
 function eliminarTodo(e) {
   if (e.target.matches("#eliminarTodo")) {
-    planesElegidos.splice(0);
+    planesElegidos = [];
     contador = 0;
-    agregarCarritoStorage();
     mostrarCarrito();
     cantidadCarrito(contador);
   }
@@ -271,6 +269,7 @@ function cerrarSesion(e) {
 }
 function traerCarritoStorage() {
   let carritoCopy = JSON.parse(localStorage.getItem("carrito"));
+
   return carritoCopy;
 }
 
