@@ -1,3 +1,19 @@
+const carritos = document.querySelector("#carrito");
+const mostrarCant = document.createElement("span");
+const mostrarItems = document.querySelector(".contenedor-carrito");
+const items = document.querySelector("#tabla");
+const mostrarItem = document.createElement("div");
+const popup = document.querySelector("#popup");
+const planesVigentes = document.querySelector("#menu-planes");
+const $planes = document.querySelector("#planes");
+const $sesiones = document.querySelector("#sesiones");
+const nombreIngresado = document.querySelector("#nombre");
+const mailIngresado = document.querySelector("#email");
+const passIngresado = document.querySelector("#password");
+const checkbox = document.querySelector("check");
+const saludo = document.querySelector("#bienvenida");
+const power = document.querySelector("#power");
+
 // Objeto Planes
 function planes(
   id,
@@ -37,13 +53,11 @@ const arraySesiones = [
   new sesiones(6, "Botox", 1, 4000),
   new sesiones(7, "Depilación", 1, 1500),
 ];
-
 let totalFinal;
 let contador = 0;
 let nombre;
 let planesElegidos = []; // array para el carrito
 const consultaPlan = arrayPlanes.concat(arraySesiones);
-
 // sumar carrito
 function sumarCarrito(array) {
   let total = 0;
@@ -52,24 +66,6 @@ function sumarCarrito(array) {
   });
   return total;
 }
-// // Carrito de compras
-function carrito(tipoPlan) {
-  planesElegidos.push(tipoPlan);
-  jsonCarrito();
-}
-
-// Muestro la cantidad que hay en el carrito
-const carritos = document.querySelector("#carrito");
-const mostrarCant = document.createElement("span");
-
-// mostrar carrito con productos
-const mostrarItems = document.querySelector(".contenedor-carrito");
-const items = document.querySelector("#tabla");
-const mostrarItem = document.createElement("div");
-
-const planesVigentes = document.querySelector("#menu-planes");
-const $planes = document.querySelector("#planes");
-const $sesiones = document.querySelector("#sesiones");
 
 // Muestro los planes
 const mostrarPlanes = () => {
@@ -89,7 +85,6 @@ const mostrarPlanes = () => {
   });
 };
 mostrarPlanes();
-
 // Muestro las sesiones
 const mostrarSesiones = () => {
   arraySesiones.forEach((el) => {
@@ -100,7 +95,6 @@ const mostrarSesiones = () => {
   });
 };
 mostrarSesiones();
-
 function itemRepetido(idElegido) {
   let result = planesElegidos.find((el) => el.id === idElegido);
   return result;
@@ -118,8 +112,8 @@ consultaPlan.forEach((listas, index) => {
     }
   });
   mostrarCarrito();
+  agregarCarritoStorage();
 });
-
 // listener generales
 document.addEventListener("click", (e) => {
   recogerDatos(e);
@@ -138,7 +132,6 @@ function cantidadCarrito(contador) {
   mostrarCant.innerHTML = `<span>${contador}</span>`;
   carritos.appendChild(mostrarCant);
 }
-
 function abrirCarrito(e) {
   if (e.target.matches("#carrito")) {
     if (mostrarItems.style.visibility === "visible") {
@@ -152,6 +145,14 @@ function abrirCarrito(e) {
 // Mostrar carrito que esta almacenado en JSON
 function mostrarCarrito() {
   items.innerHTML = "";
+  if (saludo.id === "cerrar") {
+    let copia = traerCarritoStorage();
+    if (copia !== 0) {
+      planesElegidos = traerCarritoStorage();
+      contador = cantidadStorage();
+      cantidadCarrito(contador);
+    }
+  }
   planesElegidos.forEach((el) => {
     items.innerHTML += `<th scope="row text-center">${el.id}</th>
       <td>${el.tipo}</td>
@@ -165,7 +166,6 @@ function mostrarCarrito() {
     <a href="#" class="text-decoration-underline" id="eliminarTodo">Eliminar Todo</a>
     <p>$${totalFinal}</p>
     </div>`;
-  jsonCarrito();
 }
 
 function quitarCant(e) {
@@ -191,7 +191,6 @@ function agregarCant(e) {
     mostrarCarrito();
   }
 }
-
 function quitarElemento(e) {
   if (e.target.matches(".trash")) {
     let p = planesElegidos.find((el) => el.id === Number(e.target.dataset.id));
@@ -201,6 +200,7 @@ function quitarElemento(e) {
     mostrarCarrito();
     cantidadCarrito(contador);
   }
+  agregarCarritoStorage();
 }
 function eliminarTodo(e) {
   if (e.target.matches("#eliminarTodo")) {
@@ -210,9 +210,7 @@ function eliminarTodo(e) {
     cantidadCarrito(contador);
   }
 }
-
 // funciones para abrir y cerrar popup
-const popup = document.querySelector("#popup");
 function abrirPopup(e) {
   if (e.target.matches("#bienvenida")) {
     popup.classList.add("active");
@@ -223,16 +221,7 @@ function cerrarPopup(e) {
     popup.classList.remove("active");
   }
 }
-
-function jsonCarrito() {
-  localStorage.setItem("carrito", JSON.stringify(planesElegidos));
-}
-
-const nombreIngresado = document.querySelector("#nombre");
-const mailIngresado = document.querySelector("#email");
-const passIngresado = document.querySelector("#password");
-const checkbox = document.querySelector("check");
-
+// Recoger datos del login
 function recogerDatos(e) {
   let user;
   if (e.target.matches("#submit")) {
@@ -245,9 +234,6 @@ function recogerDatos(e) {
     localStorage.setItem("usuario", JSON.stringify(user));
   }
 }
-
-const saludo = document.querySelector("#bienvenida");
-const power = document.querySelector("#power");
 
 // funcion para activar el power de cierra de sesion
 function powerAdd() {
@@ -270,7 +256,35 @@ function cerrarSesion(e) {
   if (e.target.matches("#power")) {
     saludo.innerHTML = `Ingresar`;
     localStorage.removeItem("usuario");
+    localStorage.removeItem("carrito");
+    planesElegidos = [];
+    contador = 0;
+    cantidadCarrito(contador);
     saludo.id = "bienvenida";
   }
+  mostrarCarrito();
   powerAdd();
+}
+function traerCarritoStorage() {
+  let carritoCopy = JSON.parse(localStorage.getItem("carrito"));
+
+  return carritoCopy;
+}
+
+// // Carrito de compras
+function carrito(tipoPlan) {
+  planesElegidos.push(tipoPlan);
+}
+function agregarCarritoStorage() {
+  if (saludo.id === "cerrar") {
+    if (planesElegidos.length === 0) {
+    } else {
+      localStorage.setItem("carrito", JSON.stringify(planesElegidos));
+    }
+  }
+}
+function cantidadStorage() {
+  let carrito = traerCarritoStorage();
+  let cont = carrito.length;
+  return cont;
 }
