@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;700&display=swap");
 /*!
  * Bootstrap v5.1.3 (https://getbootstrap.com/)
@@ -12023,73 +12024,6 @@ fieldset:disabled .btn {
   gap: 25px;
 }
 
-#toggler,
-.navbar label {
-  display: none;
-}
-
-@media screen and (max-width: 600px) {
-  .menu {
-    width: 100%;
-    max-height: 0;
-    overflow: hidden;
-  }
-  .list {
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
-    -webkit-box-align: end;
-        -ms-flex-align: end;
-            align-items: end;
-    padding: 20px;
-  }
-  .navbar label {
-    display: -webkit-inline-box;
-    display: -ms-inline-flexbox;
-    display: inline-flex;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    cursor: pointer;
-  }
-  #toggler:checked ~ .menu {
-    max-height: 100%;
-  }
-}
-
-.cuadro_barras {
-  position: relative;
-  width: 22px;
-  height: 15px;
-}
-
-.barras {
-  position: absolute;
-  top: 5px;
-  width: 20px;
-  height: 2px;
-  background: black;
-}
-
-.barras::before {
-  content: "";
-  position: absolute;
-  width: 20px;
-  height: 2px;
-  background: black;
-  top: -5px;
-}
-
-.barras::after {
-  content: "";
-  position: absolute;
-  width: 20px;
-  height: 2px;
-  background: black;
-  top: 5px;
-}
-
 .img-inicio {
   width: 100%;
 }
@@ -12097,18 +12031,26 @@ fieldset:disabled .btn {
 .btn {
   position: relative;
   color: black;
-  border: 1px solid #b2b2d3;
+  border: none;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  color: white;
-  background: rgba(0, 0, 0, 0.5);
-  font-size: 0.6em;
+  color: black;
+  font-size: 0.8em;
 }
 
-.btn:hover {
-  color: white;
-  background: #b2b2d3;
+.btn::before {
+  content: "";
+  position: absolute;
+  bottom: 3px;
+  width: 0;
+}
+
+.btn:hover::before {
+  border: 1px solid blueviolet;
+  width: 70%;
+  -webkit-transition: all 0.5s linear;
+  transition: all 0.5s linear;
 }
 
 .icono {
@@ -12144,22 +12086,6 @@ ul {
   cursor: pointer;
 }
 
-.confirmacion {
-  position: absolute;
-  background: rgba(0, 0, 0, 0.8);
-  color: white;
-  text-shadow: 1px 1px black;
-  top: 0;
-  left: 0;
-  border-radius: 10px;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  -ms-flex-item-align: center;
-      -ms-grid-row-align: center;
-      align-self: center;
-}
-
 .contenedor-carrito {
   position: absolute;
   top: 25px;
@@ -12169,7 +12095,7 @@ ul {
   border-radius: 10px;
   -webkit-box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
           box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
-  width: 500px;
+  width: 23rem;
   visibility: hidden;
 }
 
@@ -12182,19 +12108,107 @@ ul {
   padding: 5px;
 }
 
-.btn-carrito {
-  width: 20px;
-}
-
-#nombre {
+#bienvenida {
   cursor: pointer;
 }
 
-#form {
+/* POPUP */
+/* ------------------------- */
+.popup {
+  position: absolute;
+  top: 1rem;
+  right: 8rem;
+  width: 20rem;
   background: white;
-  border: 1px solid gainsboro;
-  -webkit-box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
-          box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
-  z-index: 2;
+  visibility: hidden;
+}
+
+.popup.active {
+  visibility: visible;
+  z-index: 50;
+}
+
+.popup .close-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  text-align: center;
+  font-size: 20px;
+  color: black;
+  cursor: pointer;
+}
+
+.popup h3, .popup .h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.3rem;
+  margin-top: 0.2rem;
+  color: #000;
+  opacity: 0;
+}
+
+.form-element {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column wrap;
+          flex-flow: column wrap;
+  -ms-flex-line-pack: center;
+      align-content: center;
+}
+
+/* ANIMACIONES */
+.popup.active h3, .popup.active .h3 {
+  -webkit-animation: entradaTitulo 0.8s ease 0s forwards;
+          animation: entradaTitulo 0.8s ease 0s forwards;
+}
+
+.popup.active input,
+.popup.active .close-btn,
+.popup.active .form-check {
+  -webkit-animation: entradaInputs 1.5s linear 0s forwards;
+          animation: entradaInputs 1.5s linear 0s forwards;
+}
+
+@-webkit-keyframes entradaInputs {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes entradaInputs {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+#power {
+  position: relative;
+}
+
+#power::after {
+  content: "Cerrar Sesión";
+  position: absolute;
+  top: 1.5rem;
+  right: -0.3rem;
+  width: 5rem;
+  padding: 3px;
+  background: #b6b6b6;
+  color: white;
+  border: 1px solid #949292;
+  border-radius: 10%;
+  visibility: hidden;
+}
+
+#power:hover::after {
+  visibility: visible;
 }
 /*# sourceMappingURL=custom.css.map */

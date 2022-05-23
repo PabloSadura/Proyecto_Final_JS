@@ -119,3 +119,89 @@ ul {
   margin: 5px;
   padding: 5px;
 }
+
+#bienvenida {
+  cursor: pointer;
+}
+
+/* POPUP */
+/* ------------------------- */
+.popup {
+  position: absolute;
+  top: 1rem;
+  right: 8rem;
+  width: 20rem;
+  background: white;
+  visibility: hidden;
+}
+
+.popup.active {
+  visibility: visible;
+  z-index: 50;
+}
+
+.popup .close-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  text-align: center;
+  font-size: 20px;
+  color: black;
+  cursor: pointer;
+}
+
+.popup h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.3rem;
+  margin-top: 0.2rem;
+  color: #000;
+  opacity: 0;
+}
+
+.form-element {
+  display: flex;
+  flex-flow: column wrap;
+  align-content: center;
+}
+
+/* ANIMACIONES */
+.popup.active h3 {
+  animation: entradaTitulo 0.8s ease 0s forwards;
+}
+
+.popup.active input,
+.popup.active .close-btn,
+.popup.active .form-check {
+  animation: entradaInputs 1.5s linear 0s forwards;
+}
+@keyframes entradaInputs {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+#power {
+  position: relative;
+}
+
+#power::after {
+  content: "Cerrar Sesión";
+  position: absolute;
+  top: 1.5rem;
+  right: -0.3rem;
+  width: 5rem;
+  padding: 3px;
+  background: rgb(182, 182, 182);
+  color: white;
+  border: 1px solid rgb(148, 146, 146);
+  border-radius: 10%;
+  visibility: hidden;
+}
+#power:hover::after {
+  visibility: visible;
+}

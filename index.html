@@ -11,24 +11,53 @@
     <header class="conteiner-fluid sticky-top">
       <div class="row">
         <nav class="navbar">
-          <a href="#" class="logo">Medicina Estética</a>
-          <input type="checkbox" id="toggler" />
-          <label for="toggler">
-            <div class="cuadro_barras">
-              <div class="barras"></div>
+          <div class="col-md-6">
+            <a href="#" class="logo ps-4">Medicina Estética</a>
+          </div>
+
+          <div class="col-md-5 menu d-flex justify-content-end me-3">
+            <div class="">
+              <a id="bienvenida" class="me-4">Ingresar</a>
+
+              <div class="popup border rounded-3" id="popup">
+                <div class="close-btn">&times</div>
+                <form action="./index.html  ">
+                  <h3>Completa tus datos</h3>
+                  <div class="form-element">
+                    <input
+                      type="text"
+                      class="mb-3 rounded-3 p-2"
+                      id="nombre"
+                      placeholder="Nombre"
+                      required
+                    />
+                    <input
+                      type="email"
+                      class="mb-3 rounded-3 p-2"
+                      id="email"
+                      placeholder="Correo"
+                      required
+                    />
+                    <input
+                      type="password"
+                      class="mb-3 rounded-3 p-2"
+                      id="password"
+                      placeholder="Contraseña"
+                      required
+                    />
+                  </div>
+                  <div class="text-center">
+                    <button type="submit" class="m-4 p-1 rounded-3" id="submit">
+                      Ingresar
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
-          </label>
-          <div class="menu">
-            <div>
-              <ul class="list p-1">
-                <li><a class="link" href="">Home</a></li>
-                <li><a class="link" href="">About</a></li>
-                <li><a class="link" href="">Contact</a></li>
-              </ul>
-            </div>
-            <div class="col me-4 position-relative d-flex justify-content-end">
+            <div class="col-md-1 me-4 position-relative">
               <a class="" href="#"
                 ><i class="bi bi-cart icono" id="carrito"></i>
+                <i class="bi bi-power ms-1 visually-hidden" id="power"></i>
                 <div class="contenedor-carrito">
                   <table class="table">
                     <thead>

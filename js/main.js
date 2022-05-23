@@ -40,6 +40,7 @@ const arraySesiones = [
 
 let totalFinal;
 let contador = 0;
+let nombre;
 let planesElegidos = []; // array para el carrito
 const consultaPlan = arrayPlanes.concat(arraySesiones);
 
@@ -54,6 +55,7 @@ function sumarCarrito(array) {
 // // Carrito de compras
 function carrito(tipoPlan) {
   planesElegidos.push(tipoPlan);
+  jsonCarrito();
 }
 
 // Muestro la cantidad que hay en el carrito
@@ -120,13 +122,18 @@ consultaPlan.forEach((listas, index) => {
 
 // listener generales
 document.addEventListener("click", (e) => {
+  recogerDatos(e);
   abrirCarrito(e);
   quitarCant(e);
   agregarCant(e);
   quitarElemento(e);
   eliminarTodo(e);
+  cerrarSesion(e);
+  abrirPopup(e);
+  cerrarPopup(e);
+  console.log(e.target);
 });
-
+// cambiar funcion carrito para que cuente lo que hay en el JSON
 function cantidadCarrito(contador) {
   mostrarCant.innerHTML = `<span>${contador}</span>`;
   carritos.appendChild(mostrarCant);
@@ -142,13 +149,13 @@ function abrirCarrito(e) {
     }
   }
 }
-
+// Mostrar carrito que esta almacenado en JSON
 function mostrarCarrito() {
   items.innerHTML = "";
   planesElegidos.forEach((el) => {
     items.innerHTML += `<th scope="row text-center">${el.id}</th>
       <td>${el.tipo}</td>
-      <td class="text-center"><input type="submit" value="-" class="btn-carrito me-1 resta" data-id="${el.id}">  ${el.cantidad}  <input type="submit" value="+" class="btn-carrito ms-1 suma" data-id="${el.id}"></td>
+      <td class="text-center"><i class="bi bi-dash-circle resta me-1"data-id="${el.id}"></i> ${el.cantidad} <i class="bi bi-plus-circle suma ms-1"data-id="${el.id}"></i></td>
       <td>$${el.precio}</td>
       <td><i class="bi bi-trash trash"data-id="${el.id}"></i></td>`;
   });
@@ -158,6 +165,7 @@ function mostrarCarrito() {
     <a href="#" class="text-decoration-underline" id="eliminarTodo">Eliminar Todo</a>
     <p>$${totalFinal}</p>
     </div>`;
+  jsonCarrito();
 }
 
 function quitarCant(e) {
@@ -196,9 +204,72 @@ function quitarElemento(e) {
 }
 function eliminarTodo(e) {
   if (e.target.matches("#eliminarTodo")) {
-    planesElegidos.splice(0);
+    planesElegidos = [];
     contador = 0;
     mostrarCarrito();
     cantidadCarrito(contador);
   }
+}
+
+// funciones para abrir y cerrar popup
+const popup = document.querySelector("#popup");
+function abrirPopup(e) {
+  if (e.target.matches("#bienvenida")) {
+    popup.classList.add("active");
+  }
+}
+function cerrarPopup(e) {
+  if (e.target.matches(".close-btn")) {
+    popup.classList.remove("active");
+  }
+}
+
+function jsonCarrito() {
+  localStorage.setItem("carrito", JSON.stringify(planesElegidos));
+}
+
+const nombreIngresado = document.querySelector("#nombre");
+const mailIngresado = document.querySelector("#email");
+const passIngresado = document.querySelector("#password");
+const checkbox = document.querySelector("check");
+
+function recogerDatos(e) {
+  let user;
+  if (e.target.matches("#submit")) {
+    nombre = nombreIngresado.value;
+    user = {
+      usuario: nombre,
+      email: mailIngresado.value,
+      password: passIngresado.value,
+    };
+    localStorage.setItem("usuario", JSON.stringify(user));
+  }
+}
+
+const saludo = document.querySelector("#bienvenida");
+const power = document.querySelector("#power");
+
+function powerAdd() {
+  if (saludo.id === "cerrar") {
+    power.classList.remove("visually-hidden");
+  } else {
+    power.classList.add("visually-hidden");
+  }
+}
+function recuperarDato(dato) {
+  if (dato) {
+    saludo.id = "cerrar";
+    saludo.innerHTML = `Bienvenid@ ${dato.usuario}`;
+  }
+  powerAdd();
+}
+recuperarDato(JSON.parse(localStorage.getItem("usuario")));
+
+function cerrarSesion(e) {
+  if (e.target.matches("#power")) {
+    saludo.innerHTML = `Ingresar`;
+    localStorage.removeItem("usuario");
+    saludo.id = "bienvenida";
+  }
+  powerAdd();
 }
