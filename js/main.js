@@ -175,11 +175,10 @@ function quitarCant(e) {
     );
     if (p.cantidad <= 1) {
       mostrarCarrito();
-      agregarCarritoStorage();
     } else {
       p.cantidad--;
-      mostrarCarrito();
       agregarCarritoStorage();
+      mostrarCarrito();
     }
   }
 }
@@ -200,18 +199,19 @@ function quitarElemento(e) {
     p = planesElegidos.filter((item) => item.id !== p.id);
     planesElegidos = p;
     contador--;
+    agregarCarritoStorage();
     mostrarCarrito();
     cantidadCarrito(contador);
   }
-  agregarCarritoStorage();
 }
+// corregir eliminar todo del storage
 function eliminarTodo(e) {
   if (e.target.matches("#eliminarTodo")) {
     planesElegidos.splice(0);
     contador = 0;
+    agregarCarritoStorage();
     mostrarCarrito();
     cantidadCarrito(contador);
-    agregarCarritoStorage();
   }
 }
 // funciones para abrir y cerrar popup
