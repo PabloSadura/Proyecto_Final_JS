@@ -199,11 +199,13 @@ function quitarElemento(e) {
     p = planesElegidos.filter((item) => item.id !== p.id);
     planesElegidos = p;
     contador--;
+    agregarCarritoStorage();
     mostrarCarrito();
     cantidadCarrito(contador);
   }
   agregarCarritoStorage();
 }
+// no se puede eliminar todo
 function eliminarTodo(e) {
   if (e.target.matches("#eliminarTodo")) {
     planesElegidos = [];
