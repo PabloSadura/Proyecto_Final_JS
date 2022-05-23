@@ -175,9 +175,11 @@ function quitarCant(e) {
     );
     if (p.cantidad <= 1) {
       mostrarCarrito();
+      agregarCarritoStorage();
     } else {
       p.cantidad--;
       mostrarCarrito();
+      agregarCarritoStorage();
     }
   }
 }
@@ -188,6 +190,7 @@ function agregarCant(e) {
       (el) => el.id === Number(e.target.dataset.id)
     );
     p.cantidad++;
+    agregarCarritoStorage();
     mostrarCarrito();
   }
 }
@@ -204,10 +207,11 @@ function quitarElemento(e) {
 }
 function eliminarTodo(e) {
   if (e.target.matches("#eliminarTodo")) {
-    planesElegidos = [];
+    planesElegidos.splice(0);
     contador = 0;
     mostrarCarrito();
     cantidadCarrito(contador);
+    agregarCarritoStorage();
   }
 }
 // funciones para abrir y cerrar popup
@@ -267,7 +271,6 @@ function cerrarSesion(e) {
 }
 function traerCarritoStorage() {
   let carritoCopy = JSON.parse(localStorage.getItem("carrito"));
-
   return carritoCopy;
 }
 
