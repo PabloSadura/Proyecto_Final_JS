@@ -153,13 +153,16 @@ function mostrarCarrito() {
       cantidadCarrito(contador);
     }
   }
-  planesElegidos.forEach((el) => {
-    items.innerHTML += `<th scope="row text-center">${el.id}</th>
+  if (!planesElegidos) {
+  } else {
+    planesElegidos.forEach((el) => {
+      items.innerHTML += `<th scope="row text-center">${el.id}</th>
       <td>${el.tipo}</td>
       <td class="text-center"><i class="bi bi-dash-circle resta me-1"data-id="${el.id}"></i> ${el.cantidad} <i class="bi bi-plus-circle suma ms-1"data-id="${el.id}"></i></td>
       <td>$${el.precio}</td>
       <td><i class="bi bi-trash trash"data-id="${el.id}"></i></td>`;
-  });
+    });
+  }
   mostrarItems.appendChild(mostrarItem);
   totalFinal = sumarCarrito(planesElegidos);
   mostrarItem.innerHTML = `<div class="d-flex justify-content-evenly">Total
