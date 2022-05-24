@@ -205,9 +205,10 @@ function quitarElemento(e) {
   }
   agregarCarritoStorage();
 }
-// no se puede eliminar todo
+// funcion para eliminar todo
 function eliminarTodo(e) {
   if (e.target.matches("#eliminarTodo")) {
+    localStorage.removeItem("carrito");
     planesElegidos = [];
     contador = 0;
     mostrarCarrito();
@@ -281,20 +282,20 @@ function carrito(tipoPlan) {
 function agregarCarritoStorage() {
   if (saludo.id === "cerrar") {
     let cant = traerCarritoStorage();
-    console.log(cant);
     if (!cant) {
-      if (planesElegidos.length >= 1) {
-        localStorage.setItem("carrito", JSON.stringify(planesElegidos));
-      } else {
-        planesElegidos = cant;
-      }
-    } else {
+      planesElegidos = [];
       localStorage.setItem("carrito", JSON.stringify(planesElegidos));
     }
   }
 }
 function cantidadStorage() {
+  let cont;
   let carrito = traerCarritoStorage();
-  let cont = carrito.length;
+  if (!carrito) {
+    cont = 0;
+  } else {
+    cont = carrito;
+  }
+
   return cont;
 }
