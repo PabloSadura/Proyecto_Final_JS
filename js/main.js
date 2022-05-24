@@ -271,7 +271,6 @@ function cerrarSesion(e) {
 }
 function traerCarritoStorage() {
   let carritoCopy = JSON.parse(localStorage.getItem("carrito"));
-
   return carritoCopy;
 }
 
@@ -281,7 +280,13 @@ function carrito(tipoPlan) {
 }
 function agregarCarritoStorage() {
   if (saludo.id === "cerrar") {
-    if (planesElegidos.length === 0) {
+    let cant = traerCarritoStorage();
+    if (cant.length >= 1) {
+      if (planesElegidos.length >= 1) {
+        localStorage.setItem("carrito", JSON.stringify(planesElegidos));
+      } else {
+        planesElegidos = cant;
+      }
     } else {
       localStorage.setItem("carrito", JSON.stringify(planesElegidos));
     }
