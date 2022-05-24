@@ -281,7 +281,8 @@ function carrito(tipoPlan) {
 function agregarCarritoStorage() {
   if (saludo.id === "cerrar") {
     let cant = traerCarritoStorage();
-    if (cant.length >= 1) {
+    console.log(cant);
+    if (!cant) {
       if (planesElegidos.length >= 1) {
         localStorage.setItem("carrito", JSON.stringify(planesElegidos));
       } else {
