@@ -70,7 +70,7 @@ function sumarCarrito(array) {
 // Muestro los planes
 const mostrarPlanes = () => {
   arrayPlanes.forEach((el) => {
-    $planes.innerHTML += `<div class="col-md-3 mt-4 card-planes">
+    $planes.innerHTML += `<article class="col-md-3 mt-4 card-planes">
     <h4 class="text-center">${el.tipo}</h4>
     <h5 class="text-center">$${el.precio}</h5>
     <ul>
@@ -80,7 +80,7 @@ const mostrarPlanes = () => {
     <li>${el.depilacion} sesiones de Depilación</li>
     </ul>
     <div class="text-center">
-    <button class="btn btn${el.id}">Agregar</button></div>
+    <button class="css-button-retro--sand mb-2 btn${el.id}">Agregar</button></article>
     </div>`;
   });
 };
@@ -91,7 +91,7 @@ const mostrarSesiones = () => {
     $sesiones.innerHTML += `<div class="col-md-2 mt-4 me-1 card-planes">
         <h4 class="text-center">${el.tipo}</h4>
         <h5 class="text-center">$${el.precio} x sesión</h5>
-        <div class="text-center"><button class="btn btn${el.id}">Agregar</button></div>`;
+        <div class="text-center"><button class="css-button-retro--sand mb-2 btn${el.id}">Agregar</button></div>`;
   });
 };
 mostrarSesiones();
@@ -147,7 +147,7 @@ function mostrarCarrito() {
   items.innerHTML = "";
   if (saludo.id === "cerrar") {
     let copia = traerCarritoStorage();
-    if (copia.length !== 0) {
+    if (!copia) {
       planesElegidos = traerCarritoStorage();
       contador = cantidadStorage();
       cantidadCarrito(contador);
