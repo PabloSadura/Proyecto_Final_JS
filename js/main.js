@@ -199,6 +199,7 @@ function quitarCant(e) {
     } else {
       p.cantidad--;
       mostrarCarrito();
+      guardarEnStorage();
     }
   }
 }
@@ -258,6 +259,7 @@ function guardarEnStorage(dato) {
   }
 }
 recuperarDatoCarrito(JSON.parse(localStorage.getItem("carrito")));
+
 document.addEventListener("click", (e) => {
   agregarCarrito(e);
   abrirCarrito(e);
