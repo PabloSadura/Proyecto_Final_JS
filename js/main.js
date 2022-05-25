@@ -209,6 +209,7 @@ function agregarCant(e) {
     );
     p.cantidad++;
     mostrarCarrito();
+    guardarEnStorage(p);
   }
 }
 function quitarElemento(e) {
