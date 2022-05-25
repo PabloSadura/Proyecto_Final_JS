@@ -282,14 +282,9 @@ function traerCarritoStorage() {
 function carrito(tipoPlan) {
   planesElegidos.push(tipoPlan);
 }
+
 function agregarCarritoStorage() {
-  if (saludo.id === "cerrar") {
-    let cant = traerCarritoStorage();
-    if (!cant) {
-      planesElegidos = [];
-      localStorage.setItem("carrito", JSON.stringify(planesElegidos));
-    }
-  }
+  localStorage.setItem("carrito", JSON.stringify(planesElegidos));
 }
 function cantidadStorage() {
   let cont;
