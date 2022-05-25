@@ -71,17 +71,17 @@ function sumarCarrito(array) {
 const mostrarPlanes = () => {
   arrayPlanes.forEach((el) => {
     $planes.innerHTML += `<article class="col-md-3 mt-4 card-planes">
-    <h4 class="text-center">${el.tipo}</h4>
-    <h5 class="text-center">$${el.precio}</h5>
-    <ul>
-    <li>${el.mesoterapia} sesiones de Mesoterapia</li>
-    <li>${el.botox} sesiones de Botox</li>
-    <li>${el.pilling} sesiones de Pilling</li>
-    <li>${el.depilacion} sesiones de Depilación</li>
-    </ul>
-    <div class="text-center">
-    <button class="css-button-retro--sand mb-2 btn${el.id}">Agregar</button></article>
-    </div>`;
+      <h4 class="text-center">${el.tipo}</h4>
+      <h5 class="text-center">$${el.precio}</h5>
+      <ul>
+      <li>${el.mesoterapia} sesiones de Mesoterapia</li>
+      <li>${el.botox} sesiones de Botox</li>
+      <li>${el.pilling} sesiones de Pilling</li>
+      <li>${el.depilacion} sesiones de Depilación</li>
+      </ul>
+      <div class="text-center">
+      <button class="css-button-retro--sand mb-2 btn${el.id} planes"data-id="${el.id}">Agregar</button></article>
+      </div>`;
   });
 };
 mostrarPlanes();
@@ -89,49 +89,13 @@ mostrarPlanes();
 const mostrarSesiones = () => {
   arraySesiones.forEach((el) => {
     $sesiones.innerHTML += `<div class="col-md-2 mt-4 me-1 card-planes">
-        <h4 class="text-center">${el.tipo}</h4>
-        <h5 class="text-center">$${el.precio} x sesión</h5>
-        <div class="text-center"><button class="css-button-retro--sand mb-2 btn${el.id}">Agregar</button></div>`;
+          <h4 class="text-center">${el.tipo}</h4>
+          <h5 class="text-center">$${el.precio} x sesión</h5>
+          <div class="text-center"><button class="css-button-retro--sand mb-2 btn${el.id} planes" data-id="${el.id}">Agregar</button></div>`;
   });
 };
 mostrarSesiones();
-function itemRepetido(idElegido) {
-  let result = planesElegidos.find((el) => el.id === idElegido);
-  return result;
-}
-// agrego planes al carrito
-consultaPlan.forEach((listas, index) => {
-  document.querySelector(`.btn${index + 1}`).addEventListener("click", () => {
-    let result = itemRepetido(index + 1);
-    if (!result) {
-      carrito(listas);
-      contador++;
-      cantidadCarrito(contador);
-    } else {
-      result.cantidad++;
-    }
-  });
-  mostrarCarrito();
-  agregarCarritoStorage();
-});
-// listener generales
-document.addEventListener("click", (e) => {
-  recogerDatos(e);
-  abrirCarrito(e);
-  quitarCant(e);
-  agregarCant(e);
-  quitarElemento(e);
-  eliminarTodo(e);
-  cerrarSesion(e);
-  abrirPopup(e);
-  cerrarPopup(e);
-  console.log(e.target);
-});
-// cambiar funcion carrito para que cuente lo que hay en el JSON
-function cantidadCarrito(contador) {
-  mostrarCant.innerHTML = `<span>${contador}</span>`;
-  carritos.appendChild(mostrarCant);
-}
+
 function abrirCarrito(e) {
   if (e.target.matches("#carrito")) {
     if (mostrarItems.style.visibility === "visible") {
@@ -142,83 +106,6 @@ function abrirCarrito(e) {
     }
   }
 }
-// Mostrar carrito que esta almacenado en JSON
-function mostrarCarrito() {
-  items.innerHTML = "";
-  if (saludo.id === "cerrar") {
-    let copia = traerCarritoStorage();
-    if (!copia) {
-      planesElegidos = traerCarritoStorage();
-      contador = cantidadStorage();
-      cantidadCarrito(contador);
-    }
-  }
-  if (!planesElegidos) {
-  } else {
-    planesElegidos.forEach((el) => {
-      items.innerHTML += `<th scope="row text-center">${el.id}</th>
-      <td>${el.tipo}</td>
-      <td class="text-center"><i class="bi bi-dash-circle resta me-1"data-id="${el.id}"></i> ${el.cantidad} <i class="bi bi-plus-circle suma ms-1"data-id="${el.id}"></i></td>
-      <td>$${el.precio}</td>
-      <td><i class="bi bi-trash trash"data-id="${el.id}"></i></td>`;
-    });
-  }
-  mostrarItems.appendChild(mostrarItem);
-  totalFinal = sumarCarrito(planesElegidos);
-  mostrarItem.innerHTML = `<div class="d-flex justify-content-evenly">Total
-    <a href="#" class="text-decoration-underline" id="eliminarTodo">Eliminar Todo</a>
-    <p>$${totalFinal}</p>
-    </div>`;
-}
-
-function quitarCant(e) {
-  if (e.target.matches(".resta")) {
-    const p = planesElegidos.find(
-      (el) => el.id === Number(e.target.dataset.id)
-    );
-    if (p.cantidad <= 1) {
-      mostrarCarrito();
-    } else {
-      p.cantidad--;
-      agregarCarritoStorage();
-      mostrarCarrito();
-    }
-  }
-}
-
-function agregarCant(e) {
-  if (e.target.matches(".suma")) {
-    const p = planesElegidos.find(
-      (el) => el.id === Number(e.target.dataset.id)
-    );
-    p.cantidad++;
-    agregarCarritoStorage();
-    mostrarCarrito();
-  }
-}
-function quitarElemento(e) {
-  if (e.target.matches(".trash")) {
-    let p = planesElegidos.find((el) => el.id === Number(e.target.dataset.id));
-    p = planesElegidos.filter((item) => item.id !== p.id);
-    planesElegidos = p;
-    contador--;
-    agregarCarritoStorage();
-    mostrarCarrito();
-    cantidadCarrito(contador);
-  }
-  agregarCarritoStorage();
-}
-// funcion para eliminar todo
-function eliminarTodo(e) {
-  if (e.target.matches("#eliminarTodo")) {
-    localStorage.removeItem("carrito");
-    planesElegidos = [];
-    contador = 0;
-    mostrarCarrito();
-    cantidadCarrito(contador);
-  }
-}
-// funciones para abrir y cerrar popup
 function abrirPopup(e) {
   if (e.target.matches("#bienvenida")) {
     popup.classList.add("active");
@@ -229,7 +116,6 @@ function cerrarPopup(e) {
     popup.classList.remove("active");
   }
 }
-// Recoger datos del login
 function recogerDatos(e) {
   let user;
   if (e.target.matches("#submit")) {
@@ -242,8 +128,6 @@ function recogerDatos(e) {
     localStorage.setItem("usuario", JSON.stringify(user));
   }
 }
-
-// funcion para activar el power de cierra de sesion
 function powerAdd() {
   if (saludo.id === "cerrar") {
     power.classList.remove("visually-hidden");
@@ -251,15 +135,6 @@ function powerAdd() {
     power.classList.add("visually-hidden");
   }
 }
-function recuperarDato(dato) {
-  if (dato) {
-    saludo.id = "cerrar";
-    saludo.innerHTML = `Bienvenid@ ${dato.usuario}`;
-  }
-  powerAdd();
-}
-recuperarDato(JSON.parse(localStorage.getItem("usuario")));
-
 function cerrarSesion(e) {
   if (e.target.matches("#power")) {
     saludo.innerHTML = `Ingresar`;
@@ -267,33 +142,131 @@ function cerrarSesion(e) {
     localStorage.removeItem("carrito");
     planesElegidos = [];
     contador = 0;
-    cantidadCarrito(contador);
     saludo.id = "bienvenida";
+    cantidadCarrito(contador);
   }
   mostrarCarrito();
   powerAdd();
 }
-function traerCarritoStorage() {
-  let carritoCopy = JSON.parse(localStorage.getItem("carrito"));
-  return carritoCopy;
-}
-
-// // Carrito de compras
-function carrito(tipoPlan) {
-  planesElegidos.push(tipoPlan);
-}
-
-function agregarCarritoStorage() {
-  localStorage.setItem("carrito", JSON.stringify(planesElegidos));
-}
-function cantidadStorage() {
-  let cont;
-  let carrito = traerCarritoStorage();
-  if (!carrito) {
-    cont = 0;
-  } else {
-    cont = carrito;
+function agregarCarrito(e) {
+  let p;
+  if (e.target.matches(".planes")) {
+    p = consultaPlan.find((el) => el.id === Number(e.target.dataset.id));
+    let resp = itemRepetido(p);
+    if (resp) {
+      p.cantidad++;
+    } else {
+      planesElegidos.push(p);
+      contador++;
+      mostrarCarrito();
+      cantidadCarrito(contador);
+      guardarEnStorage(p);
+    }
   }
-
-  return cont;
 }
+function itemRepetido(dato) {
+  let encontrado = planesElegidos.find((el) => el.id === dato.id);
+  if (encontrado) {
+    return true;
+  } else {
+    return false;
+  }
+}
+function mostrarCarrito() {
+  items.innerHTML = "";
+  planesElegidos.forEach((el) => {
+    items.innerHTML += `<th scope="row text-center">${el.id}</th>
+        <td>${el.tipo}</td>
+        <td class="text-center"><i class="bi bi-dash-circle resta me-1"data-id="${el.id}"></i> ${el.cantidad} <i class="bi bi-plus-circle suma ms-1"data-id="${el.id}"></i></td>
+        <td>$${el.precio}</td>
+        <td><i class="bi bi-trash trash"data-id="${el.id}"></i></td>`;
+  });
+
+  mostrarItems.appendChild(mostrarItem);
+  totalFinal = sumarCarrito(planesElegidos);
+  mostrarItem.innerHTML = `<div class="d-flex justify-content-evenly">Total
+      <a href="#" class="text-decoration-underline" id="eliminarTodo">Eliminar Todo</a>
+      <p>$${totalFinal}</p>
+      </div>`;
+}
+function quitarCant(e) {
+  if (e.target.matches(".resta")) {
+    const p = planesElegidos.find(
+      (el) => el.id === Number(e.target.dataset.id)
+    );
+    if (p.cantidad <= 1) {
+      mostrarCarrito();
+    } else {
+      p.cantidad--;
+      mostrarCarrito();
+    }
+  }
+}
+function agregarCant(e) {
+  if (e.target.matches(".suma")) {
+    const p = planesElegidos.find(
+      (el) => el.id === Number(e.target.dataset.id)
+    );
+    p.cantidad++;
+    mostrarCarrito();
+  }
+}
+function quitarElemento(e) {
+  if (e.target.matches(".trash")) {
+    let p = planesElegidos.find((el) => el.id === Number(e.target.dataset.id));
+    p = planesElegidos.filter((item) => item.id !== p.id);
+    planesElegidos = p;
+    contador--;
+    mostrarCarrito();
+    cantidadCarrito(contador);
+    guardarEnStorage(p);
+  }
+}
+function eliminarTodo(e) {
+  if (e.target.matches("#eliminarTodo")) {
+    localStorage.removeItem("carrito");
+    planesElegidos = [];
+    contador = 0;
+    mostrarCarrito();
+    cantidadCarrito(contador);
+  }
+}
+function cantidadCarrito(contador) {
+  mostrarCant.innerHTML = `<span>${contador}</span>`;
+  carritos.appendChild(mostrarCant);
+}
+function recuperarDatoNombre(dato) {
+  if (dato) {
+    saludo.id = "cerrar";
+    saludo.innerHTML = `Bienvenid@ ${dato.usuario}`;
+  }
+  powerAdd();
+}
+recuperarDatoNombre(JSON.parse(localStorage.getItem("usuario")));
+function recuperarDatoCarrito(dato) {
+  if (dato) {
+    planesElegidos = dato;
+  }
+  contador = planesElegidos.length;
+  cantidadCarrito(contador);
+}
+
+function guardarEnStorage(dato) {
+  if (saludo.id === "cerrar") {
+    localStorage.setItem("carrito", JSON.stringify(planesElegidos));
+  }
+}
+recuperarDatoCarrito(JSON.parse(localStorage.getItem("carrito")));
+document.addEventListener("click", (e) => {
+  agregarCarrito(e);
+  abrirCarrito(e);
+  cerrarPopup(e);
+  abrirPopup(e);
+  recogerDatos(e);
+  quitarCant(e);
+  agregarCant(e);
+  quitarElemento(e);
+  eliminarTodo(e);
+  cerrarSesion(e);
+  console.log(e.target);
+});
