@@ -155,6 +155,7 @@ function agregarCarrito(e) {
     let resp = itemRepetido(p);
     if (resp) {
       p.cantidad++;
+      guardarEnStorage();
     } else {
       planesElegidos.push(p);
       contador++;
@@ -237,8 +238,10 @@ function eliminarTodo(e) {
   }
 }
 function cantidadCarrito(contador) {
-  mostrarCant.innerHTML = `<span>${contador}</span>`;
-  carritos.appendChild(mostrarCant);
+  if (contador != 0) {
+    mostrarCant.innerHTML = `<span>${contador}</span>`;
+    carritos.appendChild(mostrarCant);
+  }
 }
 function recuperarDatoNombre(dato) {
   if (dato) {
