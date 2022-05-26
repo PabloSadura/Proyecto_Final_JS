@@ -192,11 +192,16 @@ function mostrarCarrito() {
 }
 function quitarCant(e) {
   if (e.target.matches(".resta")) {
-    const p = planesElegidos.find(
-      (el) => el.id === Number(e.target.dataset.id)
-    );
+    let p = planesElegidos.find((el) => el.id === Number(e.target.dataset.id));
     if (p.cantidad <= 1) {
+      p = planesElegidos.findIndex(
+        (el) => el.id === Number(e.target.dataset.id)
+      );
+      planesElegidos.splice(p, 1);
+      contador--;
+      cantidadCarrito(contador);
       mostrarCarrito();
+      guardarEnStorage();
     } else {
       p.cantidad--;
       mostrarCarrito();
