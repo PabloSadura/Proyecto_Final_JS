@@ -160,7 +160,7 @@ function agregarCarrito(e) {
       contador++;
       mostrarCarrito();
       cantidadCarrito(contador);
-      guardarEnStorage(p);
+      guardarEnStorage();
     }
   }
 }
@@ -210,23 +210,26 @@ function agregarCant(e) {
     );
     p.cantidad++;
     mostrarCarrito();
-    guardarEnStorage(p);
+    guardarEnStorage();
   }
 }
+
 function quitarElemento(e) {
   if (e.target.matches(".trash")) {
     let p = planesElegidos.find((el) => el.id === Number(e.target.dataset.id));
-    p = planesElegidos.filter((item) => item.id !== p.id);
-    planesElegidos = p;
+    p.cantidad = 1;
+    p = planesElegidos.findIndex((el) => el.id === Number(e.target.dataset.id));
+    planesElegidos.splice(p, 1);
     contador--;
     mostrarCarrito();
     cantidadCarrito(contador);
-    guardarEnStorage(p);
+    guardarEnStorage();
   }
 }
 function eliminarTodo(e) {
   if (e.target.matches("#eliminarTodo")) {
     localStorage.removeItem("carrito");
+    planesElegidos.forEach((el) => (el.cantidad = 1));
     planesElegidos = [];
     contador = 0;
     mostrarCarrito();
@@ -253,7 +256,7 @@ function recuperarDatoCarrito(dato) {
   cantidadCarrito(contador);
 }
 
-function guardarEnStorage(dato) {
+function guardarEnStorage() {
   if (saludo.id === "cerrar") {
     localStorage.setItem("carrito", JSON.stringify(planesElegidos));
   }
