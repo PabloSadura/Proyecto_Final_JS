@@ -233,14 +233,16 @@ function eliminarTodo(e) {
     planesElegidos.forEach((el) => (el.cantidad = 1));
     planesElegidos = [];
     contador = 0;
-    mostrarCarrito();
+    console.log(contador);
     cantidadCarrito(contador);
+    mostrarCarrito();
   }
 }
 function cantidadCarrito(contador) {
-  if (contador != 0) {
-    mostrarCant.innerHTML = `<span>${contador}</span>`;
-    carritos.appendChild(mostrarCant);
+  mostrarCant.innerHTML = `<span>${contador}</span>`;
+  carritos.appendChild(mostrarCant);
+  if (contador === 0) {
+    carritos.removeChild(mostrarCant);
   }
 }
 function recuperarDatoNombre(dato) {
