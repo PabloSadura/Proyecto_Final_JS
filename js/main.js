@@ -70,7 +70,7 @@ function sumarCarrito(array) {
 // Muestro los planes
 const mostrarPlanes = () => {
   arrayPlanes.forEach((el) => {
-    $planes.innerHTML += `<article class="col-md-3 mt-4 card-planes">
+    $planes.innerHTML += `<article class="col-md-3 mt-4 card-planes item me-3">
       <h4 class="text-center">${el.tipo}</h4>
       <h5 class="text-center">$${el.precio}</h5>
       <ul>
@@ -88,7 +88,7 @@ mostrarPlanes();
 // Muestro las sesiones
 const mostrarSesiones = () => {
   arraySesiones.forEach((el) => {
-    $sesiones.innerHTML += `<div class="col-md-2 mt-4 me-1 card-planes">
+    $sesiones.innerHTML += `<div class="col-md-2 mt-4 me-3 card-planes item">
           <h4 class="text-center">${el.tipo}</h4>
           <h5 class="text-center">$${el.precio} x sesión</h5>
           <div class="text-center"><button class="css-button-retro--sand mb-2 btn${el.id} planes" data-id="${el.id}">Agregar</button></div>`;
