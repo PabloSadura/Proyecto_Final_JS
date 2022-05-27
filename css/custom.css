@@ -1,11 +1,15 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@200;400;700&display=swap");
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css");
+* {
+  font-family: "Nunito", sans-serif;
+}
+
 /*!
  * Bootstrap v5.1.3 (https://getbootstrap.com/)
  * Copyright 2011-2021 The Bootstrap Authors
  * Copyright 2011-2021 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
-@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css");
 :root {
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;
@@ -11964,7 +11968,6 @@ fieldset:disabled .btn {
   padding: 0;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  font-family: "Montserrat", sans-serif;
 }
 
 .navbar {
@@ -12008,12 +12011,13 @@ fieldset:disabled .btn {
 }
 
 .logo {
-  margin-right: 50px;
+  position: relative;
+  font-size: 25px;
 }
 
 .logo::first-letter {
-  font-size: 40px;
-  font-weight: bolder;
+  font-size: 35px;
+  font-weight: bold;
 }
 
 .list {
@@ -12045,12 +12049,12 @@ fieldset:disabled .btn {
   background: transparent;
 }
 
-.css-button-retro--sand:hover:after {
+.css-button-retro--sand:hover::after {
   top: 0;
   left: 0;
 }
 
-.css-button-retro--sand:after {
+.css-button-retro--sand::after {
   content: "";
   width: 100%;
   z-index: -1;

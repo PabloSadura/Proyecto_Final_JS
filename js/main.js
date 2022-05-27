@@ -188,7 +188,8 @@ function mostrarCarrito() {
   mostrarItem.innerHTML = `<div class="d-flex justify-content-evenly">Total
       <a href="#" class="text-decoration-underline" id="eliminarTodo">Eliminar Todo</a>
       <p>$${totalFinal}</p>
-      </div>`;
+      </div>
+      <div class="text-center"><button class="css-button-retro--sand mb-2"><a href="./page/carrito.html">Finalizar compra</a></button></div>`;
 }
 function quitarCant(e) {
   if (e.target.matches(".resta")) {

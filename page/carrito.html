@@ -5,54 +5,66 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Medicina Estética</title>
-    <link rel="stylesheet" href="../css/custom.css" />
+    <link rel="stylesheet" href="./../css/custom.css" />
   </head>
   <body>
-    <header class="container-fluid">
-      <nav class="navbar">
-        <a href="#" class="logo">Medicina Estética</a>
-        <input type="checkbox" id="toggler" />
-        <label for="toggler">
-          <div class="cuadro_barras">
-            <div class="barras"></div>
+    <header class="container-fluid sticky-top wave">
+      <div class="row">
+        <nav class="navbar">
+          <div class="col-12 text-center col-md-3 mb-4">
+            <a href="../index.html" class="logo ps-4">Medicina Estética</a>
           </div>
-        </label>
-        <div class="menu">
-          <ul class="list p-1">
-            <li><a class="link" href="../index.html">Home</a></li>
-            <li><a class="link" href="">About</a></li>
-            <li><a class="link" href="">Contact</a></li>
-          </ul>
-          <div class="col d-flex justify-content-end">
-            <a class="" href=""><i class="bi bi-cart icono"></i></a>
-          </div>
-        </div>
-      </nav>
+        </nav>
+      </div>
     </header>
     <main>
-      <div class="container">
-        <div class="row">
-          <table
-            class="table table-bordered table-hover position-absolute top-0 end-0"
-            id="tabla"
-          >
-            <thead class="table-light">
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Producto</th>
-                <th scope="col">Cantidad</th>
-                <th scope="col">Total</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-            <tfoot></tfoot>
-          </table>
+      <div class="row">
+        <div class="col-md-6">
+          <img
+            class="img-inicio"
+            src="../img/cirugia-medicina-estetica.jpg"
+            alt=""
+          />
+        </div>
+        <div class="col-md-6 align-self-center">
+          <div id="section">
+            <h1 class="text-center">Gracias por su compra!</h1>
+          </div>
         </div>
       </div>
     </main>
-    <footer class="container">
-      <div class="row"></div>
+
+    <footer class="container-fluid mt-4 twf-bolder">
+      <div class="row mt-5 pt-3">
+        <div class="col-md-3">
+          <p>
+            <span class="text-decoration-underline">Direccion:</span> Sarmiento
+            4198
+          </p>
+          <p>
+            <span class="text-decoration-underline">Teléfono:</span>
+            342-5444555
+          </p>
+          <p>
+            <span class="text-decoration-underline">Mail:</span>
+            medicinaestetica@gmail.com.ar
+          </p>
+        </div>
+        <div class="col-md-6 text-center">
+          <h5>Seguime en:</h5>
+          <div>
+            <i class="bi bi-facebook me-2"></i>
+            <i class="bi bi-instagram me-2"></i>
+            <i class="bi bi-whatsapp"></i>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col text-center">
+          <p class="">Todos los derechos reservados</p>
+        </div>
+      </div>
     </footer>
-    <!-- <script src="js/main.js"></script> -->
+    <script src="../js/main.js"></script>
   </body>
 </html>
