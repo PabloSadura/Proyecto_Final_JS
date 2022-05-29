@@ -57,13 +57,14 @@ let totalFinal;
 let contador = 0;
 let nombre;
 let planesElegidos = []; // array para el carrito
-const consultaPlan = arrayPlanes.concat(arraySesiones);
+const consultaPlan = [...arrayPlanes, ...arraySesiones];
 // sumar carrito
 function sumarCarrito(array) {
   let total = 0;
   array.forEach((array) => {
     total += array.cantidad * array.precio;
   });
+
   return total;
 }
 
@@ -156,12 +157,27 @@ function agregarCarrito(e) {
     if (resp) {
       p.cantidad++;
       guardarEnStorage();
+      mostrarCarrito();
     } else {
       planesElegidos.push(p);
       contador++;
       mostrarCarrito();
       cantidadCarrito(contador);
       guardarEnStorage();
+      Toastify({
+        text: "Se agrego correctamente al carrito!",
+        duration: 2000,
+        newWindow: true,
+        close: true,
+        gravity: "top", // `top` or `bottom`
+        position: "center", // `left`, `center` or `right`
+        stopOnFocus: true, // Prevents dismissing of toast on hover
+        style: {
+          background:
+            " linear-gradient(to right, rgb(20, 20, 20), rgba(0, 0, 0, 0.377))",
+        },
+        onClick: function () {}, // Callback after click
+      }).showToast();
     }
   }
 }
@@ -189,7 +205,7 @@ function mostrarCarrito() {
       <a href="#" class="text-decoration-underline" id="eliminarTodo">Eliminar Todo</a>
       <p>$${totalFinal}</p>
       </div>
-      <div class="text-center"><button class="css-button-retro--sand mb-2"><a href="./page/carrito.html">Finalizar compra</a></button></div>`;
+      <div class="text-center"><button class="css-button-retro--sand mb-2" id="comprar">Finalizar compra</button></div>`;
 }
 function quitarCant(e) {
   if (e.target.matches(".resta")) {
@@ -223,14 +239,7 @@ function agregarCant(e) {
 
 function quitarElemento(e) {
   if (e.target.matches(".trash")) {
-    let p = planesElegidos.find((el) => el.id === Number(e.target.dataset.id));
-    p.cantidad = 1;
-    p = planesElegidos.findIndex((el) => el.id === Number(e.target.dataset.id));
-    planesElegidos.splice(p, 1);
-    contador--;
-    mostrarCarrito();
-    cantidadCarrito(contador);
-    guardarEnStorage();
+    confirmacion(e);
   }
 }
 function eliminarTodo(e) {
@@ -247,9 +256,7 @@ function eliminarTodo(e) {
 function cantidadCarrito(contador) {
   mostrarCant.innerHTML = `<span>${contador}</span>`;
   carritos.appendChild(mostrarCant);
-  if (contador === 0) {
-    carritos.removeChild(mostrarCant);
-  }
+  contador === 0 && carritos.removeChild(mostrarCant);
 }
 function recuperarDatoNombre(dato) {
   if (dato) {
@@ -268,9 +275,8 @@ function recuperarDatoCarrito(dato) {
 }
 
 function guardarEnStorage() {
-  if (saludo.id === "cerrar") {
+  saludo.id === "cerrar" &&
     localStorage.setItem("carrito", JSON.stringify(planesElegidos));
-  }
 }
 recuperarDatoCarrito(JSON.parse(localStorage.getItem("carrito")));
 
@@ -285,5 +291,57 @@ document.addEventListener("click", (e) => {
   quitarElemento(e);
   eliminarTodo(e);
   cerrarSesion(e);
+  comprar(e);
   console.log(e.target);
 });
+
+function comprar(e) {
+  if (e.target.matches("#comprar")) {
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "Ha realizado una compra exitosa",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+    localStorage.removeItem("carrito");
+    planesElegidos.forEach((el) => (el.cantidad = 1));
+    planesElegidos = [];
+    contador = 0;
+    console.log(contador);
+    cantidadCarrito(contador);
+    mostrarCarrito();
+  }
+}
+
+function confirmacion(e) {
+  Swal.fire({
+    title: "Está seguro que desea quitar el articulo?",
+    text: "Esta acción no puede deshacerse",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Si, eliminar!",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      let p = planesElegidos.find(
+        (el) => el.id === Number(e.target.dataset.id)
+      );
+      p.cantidad = 1;
+      p = planesElegidos.findIndex(
+        (el) => el.id === Number(e.target.dataset.id)
+      );
+      planesElegidos.splice(p, 1);
+      contador--;
+      mostrarCarrito();
+      cantidadCarrito(contador);
+      guardarEnStorage();
+      Swal.fire(
+        "Eliminado!",
+        "El producto fue eliminado con exito.",
+        "success"
+      );
+    }
+  });
+}
