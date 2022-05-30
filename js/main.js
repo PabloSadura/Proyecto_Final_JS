@@ -58,6 +58,7 @@ let contador = 0;
 let nombre;
 let planesElegidos = []; // array para el carrito
 const consultaPlan = [...arrayPlanes, ...arraySesiones];
+
 // sumar carrito
 function sumarCarrito(array) {
   let total = 0;
@@ -244,13 +245,33 @@ function quitarElemento(e) {
 }
 function eliminarTodo(e) {
   if (e.target.matches("#eliminarTodo")) {
-    localStorage.removeItem("carrito");
-    planesElegidos.forEach((el) => (el.cantidad = 1));
-    planesElegidos = [];
-    contador = 0;
-    console.log(contador);
-    cantidadCarrito(contador);
-    mostrarCarrito();
+    if (contador) {
+      Swal.fire({
+        title: "Esta seguro que desea eliminar todos los productos?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, eliminar!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          localStorage.removeItem("carrito");
+          planesElegidos.forEach((el) => (el.cantidad = 1));
+          planesElegidos = [];
+          contador = 0;
+          console.log(contador);
+          cantidadCarrito(contador);
+          mostrarCarrito();
+          Swal.fire(
+            "Eliminado!",
+            "Se han eliminado todos los productos.",
+            "success"
+          );
+        }
+      });
+    } else {
+      Swal.fire("No hay elementos en el carrito");
+    }
   }
 }
 function cantidadCarrito(contador) {
@@ -279,44 +300,33 @@ function guardarEnStorage() {
     localStorage.setItem("carrito", JSON.stringify(planesElegidos));
 }
 recuperarDatoCarrito(JSON.parse(localStorage.getItem("carrito")));
-
-document.addEventListener("click", (e) => {
-  agregarCarrito(e);
-  abrirCarrito(e);
-  cerrarPopup(e);
-  abrirPopup(e);
-  recogerDatos(e);
-  quitarCant(e);
-  agregarCant(e);
-  quitarElemento(e);
-  eliminarTodo(e);
-  cerrarSesion(e);
-  comprar(e);
-  console.log(e.target);
-});
-
 function comprar(e) {
   if (e.target.matches("#comprar")) {
     Swal.fire({
-      position: "top-end",
-      icon: "success",
-      title: "Ha realizado una compra exitosa",
-      showConfirmButton: false,
-      timer: 1500,
+      title: "Esta seguro que desea realizar la compra?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, comprar!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.removeItem("carrito");
+        planesElegidos.forEach((el) => (el.cantidad = 1));
+        planesElegidos = [];
+        contador = 0;
+        console.log(contador);
+        cantidadCarrito(contador);
+        mostrarCarrito();
+        Swal.fire("Felicitaciones!", "Compra realizada con éxito.", "success");
+      }
     });
-    localStorage.removeItem("carrito");
-    planesElegidos.forEach((el) => (el.cantidad = 1));
-    planesElegidos = [];
-    contador = 0;
-    console.log(contador);
-    cantidadCarrito(contador);
-    mostrarCarrito();
   }
 }
 
 function confirmacion(e) {
   Swal.fire({
-    title: "Está seguro que desea quitar el articulo?",
+    title: "Está seguro que desea quitar el producto?",
     text: "Esta acción no puede deshacerse",
     icon: "warning",
     showCancelButton: true,
@@ -345,3 +355,18 @@ function confirmacion(e) {
     }
   });
 }
+
+document.addEventListener("click", (e) => {
+  agregarCarrito(e);
+  abrirCarrito(e);
+  cerrarPopup(e);
+  abrirPopup(e);
+  recogerDatos(e);
+  quitarCant(e);
+  agregarCant(e);
+  quitarElemento(e);
+  eliminarTodo(e);
+  cerrarSesion(e);
+  comprar(e);
+  console.log(e.target);
+});
