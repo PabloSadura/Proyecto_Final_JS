@@ -100,23 +100,17 @@ mostrarSesiones();
 
 function abrirCarrito(e) {
   if (e.target.matches("#carrito")) {
-    if (mostrarItems.style.visibility === "visible") {
-      mostrarItems.style.visibility = "hidden";
-    } else {
-      mostrarItems.style.visibility = "visible";
-      mostrarCarrito();
-    }
+    mostrarItems.style.visibility === "visible"
+      ? (mostrarItems.style.visibility = "hidden")
+      : (mostrarItems.style.visibility = "visible");
+    mostrarCarrito();
   }
 }
 function abrirPopup(e) {
-  if (e.target.matches("#bienvenida")) {
-    popup.classList.add("active");
-  }
+  e.target.matches("#bienvenida") && popup.classList.add("active");
 }
 function cerrarPopup(e) {
-  if (e.target.matches(".close-btn")) {
-    popup.classList.remove("active");
-  }
+  e.target.matches(".close-btn") && popup.classList.remove("active");
 }
 function recogerDatos(e) {
   let user;
@@ -131,11 +125,9 @@ function recogerDatos(e) {
   }
 }
 function powerAdd() {
-  if (saludo.id === "cerrar") {
-    power.classList.remove("visually-hidden");
-  } else {
-    power.classList.add("visually-hidden");
-  }
+  saludo.id === "cerrar"
+    ? power.classList.remove("visually-hidden")
+    : power.classList.add("visually-hidden");
 }
 function cerrarSesion(e) {
   if (e.target.matches("#power")) {
@@ -239,9 +231,7 @@ function agregarCant(e) {
 }
 
 function quitarElemento(e) {
-  if (e.target.matches(".trash")) {
-    confirmacion(e);
-  }
+  e.target.matches(".trash") && confirmacion(e);
 }
 function eliminarTodo(e) {
   if (e.target.matches("#eliminarTodo")) {
