@@ -12,23 +12,126 @@
       <div class="row">
         <nav class="navbar">
           <div class="col-12 text-center col-md-3 mb-4">
-            <a href="../index.html" class="logo ps-4">Medicina Estética</a>
+            <a href="../index.html" class=""
+              ><h1 class="logo">Medicina Estética</h1></a
+            >
+          </div>
+
+          <div class="col-12 col-md-6 menu d-flex justify-content-end me-3">
+            <div class="col-6">
+              <a id="bienvenida" class="me-4 d-flex justify-content-end"
+                >Ingresar</a
+              >
+
+              <div class="popup border rounded-3" id="popup">
+                <div class="close-btn">&times</div>
+                <form action="./index.html  ">
+                  <h3>Completa tus datos</h3>
+                  <div class="form-element">
+                    <input
+                      type="text"
+                      class="mb-3 rounded-3 p-2"
+                      id="nombre"
+                      placeholder="Nombre"
+                      required
+                    />
+                    <input
+                      type="email"
+                      class="mb-3 rounded-3 p-2"
+                      id="email"
+                      placeholder="Correo"
+                      required
+                    />
+                    <input
+                      type="password"
+                      class="mb-3 rounded-3 p-2"
+                      id="password"
+                      placeholder="Contraseña"
+                      required
+                    />
+                  </div>
+                  <div class="text-center">
+                    <button
+                      type="submit"
+                      class="m-4 p-1 rounded-3 css-button-retro--sand"
+                      id="submit"
+                    >
+                      Ingresar
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="col-3 me-4 position-relative">
+              <a class="d-flex justify-content-end" href="#"
+                ><i class="bi bi-cart icono" id="carrito"></i
+                ><span class="icon" data-tooltip="Cerrar Sesión">
+                  <i class="bi bi-power ms-1" id="power"></i>
+                </span>
+
+                <div class="contenedor-carrito">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Producto</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Valor</th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tbody id="tabla"></tbody>
+                  </table>
+                  <tfoot id="tfoot"></tfoot></div
+              ></a>
+            </div>
           </div>
         </nav>
       </div>
     </header>
     <main>
       <div class="row">
-        <div class="col-md-6">
-          <img
-            class="img-inicio"
-            src="../img/cirugia-medicina-estetica.jpg"
-            alt=""
-          />
-        </div>
-        <div class="col-md-6 align-self-center">
-          <div id="section">
-            <h1 class="text-center">Gracias por su compra!</h1>
+        <div class="col mx-4 d-flex rounded">
+          <div class="col-6 border">
+            <div id="">
+              <h2 class="text-center pt-3">Productos</h2>
+              <div id="productos" class=""></div>
+            </div>
+          </div>
+          <div class="col-6 border ms-2">
+            <h2 class="text-center pt-3">Medios de pago</h2>
+            <div class="form-check ms-4">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="pagos"
+                id="efectivo"
+              />
+              <label class="form-check-label" for="efectivo">
+                Efectivo / Transferencia
+              </label>
+            </div>
+            <div class="form-check ms-4">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="pagos"
+                id="tarjeta"
+              />
+              <label class="form-check-label" for="tarjeta">
+                Tarjeta de Credito / Tarjeta Débito
+              </label>
+            </div>
+            <div class="credito"></div>
+            <div id="total" class="d-flex justify-content-between">
+              <div class="fs-1 mt-4 ms-4">Total</div>
+              <div id="total" class="mt-4 ms-4 fs-1"></div>
+            </div>
+            <div class="text-end mt-4 pe-4">
+              <button class="css-button-retro--sand" id="comprar">
+                Finalizar compra
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -65,6 +168,12 @@
         </div>
       </div>
     </footer>
-    <script src="../js/main.js"></script>
+    <script src="../js/carrito.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/toastify-js"
+    ></script>
+    <script src="cleave.min.js"></script>
   </body>
 </html>

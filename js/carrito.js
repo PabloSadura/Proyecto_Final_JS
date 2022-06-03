@@ -5,15 +5,15 @@ const items = document.querySelector("#tabla");
 const mostrarItem = document.createElement("div");
 const popup = document.querySelector("#popup");
 const planesVigentes = document.querySelector("#menu-planes");
-const $planes = document.querySelector("#planes");
-const $sesiones = document.querySelector("#sesiones");
 const nombreIngresado = document.querySelector("#nombre");
 const mailIngresado = document.querySelector("#email");
 const passIngresado = document.querySelector("#password");
 const checkbox = document.querySelector("check");
 const saludo = document.querySelector("#bienvenida");
 const power = document.querySelector("#power");
-
+const productos = document.querySelector("#productos");
+const credito = document.querySelector(".credito");
+const tarjeta_credito = document.querySelector("#tarjeta");
 // Objeto Planes
 function planes(
   id,
@@ -69,43 +69,6 @@ function sumarCarrito(array) {
   return total;
 }
 
-// Muestro los planes
-const mostrarPlanes = () => {
-  arrayPlanes.forEach((el) => {
-    $planes.innerHTML += `<article class="col-md-3 mt-4 card-planes item me-3">
-      <h4 class="text-center">${el.tipo}</h4>
-      <h5 class="text-center">$${el.precio}</h5>
-      <ul>
-      <li>${el.mesoterapia} sesiones de Mesoterapia</li>
-      <li>${el.botox} sesiones de Botox</li>
-      <li>${el.pilling} sesiones de Pilling</li>
-      <li>${el.depilacion} sesiones de Depilación</li>
-      </ul>
-      <div class="text-center">
-      <button class="css-button-retro--sand mb-2 btn${el.id} planes"data-id="${el.id}">Agregar</button></article>
-      </div>`;
-  });
-};
-mostrarPlanes();
-// Muestro las sesiones
-const mostrarSesiones = () => {
-  arraySesiones.forEach((el) => {
-    $sesiones.innerHTML += `<div class="col-md-2 mt-4 me-3 card-planes item">
-          <h4 class="text-center">${el.tipo}</h4>
-          <h5 class="text-center">$${el.precio} x sesión</h5>
-          <div class="text-center"><button class="css-button-retro--sand mb-2 btn${el.id} planes" data-id="${el.id}">Agregar</button></div>`;
-  });
-};
-mostrarSesiones();
-
-function abrirCarrito(e) {
-  if (e.target.matches("#carrito")) {
-    mostrarItems.style.visibility === "visible"
-      ? (mostrarItems.style.visibility = "hidden")
-      : (mostrarItems.style.visibility = "visible");
-    mostrarCarrito();
-  }
-}
 function abrirPopup(e) {
   e.target.matches("#bienvenida") && popup.classList.add("active");
 }
@@ -142,63 +105,15 @@ function cerrarSesion(e) {
   mostrarCarrito();
   powerAdd();
 }
-function agregarCarrito(e) {
-  let p;
-  if (e.target.matches(".planes")) {
-    p = consultaPlan.find((el) => el.id === Number(e.target.dataset.id));
-    let resp = itemRepetido(p);
-    if (resp) {
-      p.cantidad++;
-      guardarEnStorage();
-      mostrarCarrito();
-    } else {
-      planesElegidos.push(p);
-      contador++;
-      mostrarCarrito();
-      cantidadCarrito(contador);
-      guardarEnStorage();
-      Toastify({
-        text: "Se agrego correctamente al carrito!",
-        duration: 2000,
-        newWindow: true,
-        close: true,
-        gravity: "top", // `top` or `bottom`
-        position: "center", // `left`, `center` or `right`
-        stopOnFocus: true, // Prevents dismissing of toast on hover
-        style: {
-          background:
-            " linear-gradient(to right, rgb(20, 20, 20), rgba(0, 0, 0, 0.377))",
-        },
-        onClick: function () {}, // Callback after click
-      }).showToast();
-    }
-  }
-}
-function itemRepetido(dato) {
-  let encontrado = planesElegidos.find((el) => el.id === dato.id);
-  if (encontrado) {
-    return true;
-  } else {
-    return false;
-  }
-}
-function mostrarCarrito() {
-  items.innerHTML = "";
-  planesElegidos.forEach((el) => {
-    items.innerHTML += `<th scope="row text-center">${el.id}</th>
-        <td>${el.tipo}</td>
-        <td class="text-center"><i class="bi bi-dash-circle resta me-1"data-id="${el.id}"></i> ${el.cantidad} <i class="bi bi-plus-circle suma ms-1"data-id="${el.id}"></i></td>
-        <td>$${el.precio}</td>
-        <td><i class="bi bi-trash trash"data-id="${el.id}"></i></td>`;
-  });
 
-  mostrarItems.appendChild(mostrarItem);
-  totalFinal = sumarCarrito(planesElegidos);
-  mostrarItem.innerHTML = `<div class="d-flex justify-content-evenly">Total
-      <a href="#" class="text-decoration-underline" id="eliminarTodo">Eliminar Todo</a>
-      <p>$${totalFinal}</p>
-      </div>
-      <div class="text-center"><button class="css-button-retro--sand mb-2"><a href="./page/carrito.html">Finalizar compra</a></button></div>`;
+function mostrarCarrito() {
+  productos.innerHTML = "";
+  planesElegidos.forEach((el) => {
+    productos.innerHTML += `<div class="m-4 p-4 border rounded-3 shadow d-flex justify-content-evenly "><div>#${el.id}</div><div>${el.tipo}</div>
+        <div class="text-center ms-4"><i class="bi bi-dash-circle resta me-1"data-id="${el.id}"></i> ${el.cantidad} <i class="bi bi-plus-circle suma ms-1"data-id="${el.id}"></i></div>
+        <div class="ms-4">$${el.precio}</div>
+        <div><i class="bi bi-trash trash ms-4"data-id="${el.id}"></i></div</div>`;
+  });
 }
 function quitarCant(e) {
   if (e.target.matches(".resta")) {
@@ -210,11 +125,9 @@ function quitarCant(e) {
       planesElegidos.splice(p, 1);
       contador--;
       cantidadCarrito(contador);
-      mostrarCarrito();
       guardarEnStorage();
     } else {
       p.cantidad--;
-      mostrarCarrito();
       guardarEnStorage();
     }
   }
@@ -225,7 +138,6 @@ function agregarCant(e) {
       (el) => el.id === Number(e.target.dataset.id)
     );
     p.cantidad++;
-    mostrarCarrito();
     guardarEnStorage();
   }
 }
@@ -251,7 +163,6 @@ function eliminarTodo(e) {
           contador = 0;
           console.log(contador);
           cantidadCarrito(contador);
-          mostrarCarrito();
           Swal.fire(
             "Eliminado!",
             "Se han eliminado todos los productos.",
@@ -290,6 +201,29 @@ function guardarEnStorage() {
     localStorage.setItem("carrito", JSON.stringify(planesElegidos));
 }
 recuperarDatoCarrito(JSON.parse(localStorage.getItem("carrito")));
+function comprar(e) {
+  if (e.target.matches("#comprar")) {
+    Swal.fire({
+      title: "Esta seguro que desea realizar la compra?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, comprar!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.removeItem("carrito");
+        planesElegidos.forEach((el) => (el.cantidad = 1));
+        planesElegidos = [];
+        contador = 0;
+        console.log(contador);
+        cantidadCarrito(contador);
+        mostrarCarrito();
+        Swal.fire("Felicitaciones!", "Compra realizada con éxito.", "success");
+      }
+    });
+  }
+}
 
 function confirmacion(e) {
   Swal.fire({
@@ -311,7 +245,6 @@ function confirmacion(e) {
       );
       planesElegidos.splice(p, 1);
       contador--;
-      mostrarCarrito();
       cantidadCarrito(contador);
       guardarEnStorage();
       Swal.fire(
@@ -322,10 +255,8 @@ function confirmacion(e) {
     }
   });
 }
-
+mostrarCarrito();
 document.addEventListener("click", (e) => {
-  agregarCarrito(e);
-  abrirCarrito(e);
   cerrarPopup(e);
   abrirPopup(e);
   recogerDatos(e);
@@ -334,5 +265,124 @@ document.addEventListener("click", (e) => {
   quitarElemento(e);
   eliminarTodo(e);
   cerrarSesion(e);
+  comprar(e);
   console.log(e.target);
+  tarjeta(e);
+  efectivo(e);
 });
+
+function tarjeta(e) {
+  if (e.target.matches("#tarjeta")) {
+    credito.innerHTML = `
+        <div class="box_card mt-4">
+                <div class="tarjeta_credito">
+                  <div id="tipo_tarjeta">
+                    <img
+                      src="../img/tarjeta-de-credito.png"
+                      alt=""
+                      class="mt-1 ms-3"
+                    />
+                  </div>
+                  <p id="numero_tarjeta" class="text-center fs-4 mt-2 fw-bolder">
+                  **** **** **** ****
+                  </p>
+                  <div class="d-flex justify-content-evenly">
+                    <p id="nombre_apellido" class="fw-bolder">***** *******</p>
+                    <p id="dni" class="fw-bolder">********</p>
+                  </div>
+                  <div class="fechas d-flex justify-content-evenly">
+                    <div id="fecha_desde" class="fw-bolder">
+                      <p>Desde: <span id="desde">**/**</span></p>
+                    </div>
+                    <p id="fecha_hasta" class="fw-bolder">
+                      <p>Hasta: <span id="hasta">**/**</span></p></p>
+                  </div>
+                </div>
+              </div>
+              <div class="text-center mt-4">
+                <h5>Ingrese los datos de la tarjeta</h5>
+              </div>
+              <div>
+              <label for="name" class="ms-3"
+                >Nombre y Apellido:
+                <input
+                  type="text"
+                  name="name"
+                  id="name_target"
+                  class="ms-4 border-bottom border-top-0 border-start-0 border-end-0"
+                />
+              </label>
+              <label for="name" class="ms-3"
+                >D.N.I.:
+                <input
+                  type="text"
+                  name="dni"
+                  id="dni_target"
+                  class="ms-4 border-bottom border-top-0 border-start-0 border-end-0"
+                />
+              </label>
+              </div>
+              <div>
+              <label for="number" class="ms-3"
+                >N° de tarjeta:
+                <input
+                  type="number"
+                  name="number"
+                  id="numbers"
+                  class="ms-4 border-bottom border-top-0 border-start-0 border-end-0"
+                />
+              </label>
+              </div>
+              <div class="d-flex">
+              <label for="date_desde" class="ms-3"
+                >Fecha de Desde:
+                <input
+                  type="number"
+                  name="desde"
+                  id="date_desde"
+                  class=" border-bottom border-top-0 border-start-0 border-end-0"
+                />
+              </label>
+              <label for="date_hasta" class="ms-3"
+                >Fecha de Hasta:
+                <input
+                  type="number"
+                  name="hasta"
+                  id="date_hasta"
+                  class="border-bottom border-top-0 border-start-0 border-end-0"
+                />
+              </label></div>`;
+  }
+  const numeroTarjeta = document.querySelector("#numero_tarjeta");
+  const numbers = document.querySelector("#numbers");
+  const nombreApellido = document.querySelector("#nombre_apellido");
+  const nameTarget = document.querySelector("#name_target");
+  const documento = document.querySelector("#dni_target");
+  const dni = document.querySelector("#dni");
+  const desde = document.querySelector("#desde");
+  const hasta = document.querySelector("#hasta");
+  const dateDesde = document.querySelector("#date_desde");
+  const dateHasta = document.querySelector("#date_hasta");
+
+  numbers.addEventListener("keyup", () => {
+    numeroTarjeta.innerText = numbers.value;
+  });
+  name_target.addEventListener("keyup", () => {
+    nombreApellido.innerText = nameTarget.value;
+  });
+  documento.addEventListener("keyup", () => {
+    dni.innerText = documento.value;
+  });
+  dateDesde.addEventListener("keyup", () => {
+    desde.innerText = dateDesde.value;
+  });
+  dateHasta.addEventListener("keyup", () => {
+    hasta.innerText = dateHasta.value;
+  });
+}
+
+function efectivo(e) {
+  if (e.target.matches("#efectivo")) {
+    credito.innerHTML = "";
+  }
+}
