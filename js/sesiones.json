@@ -1,0 +1,6 @@
+[
+  { "id": 4, "tipo": "Mesoterapia", "cantidad": 1, "precio": 3500 },
+  { "id": 5, "tipo": "Pilling", "cantidad": 1, "precio": 2000 },
+  { "id": 6, "tipo": "Botox", "cantidad": 1, "precio": 4000 },
+  { "id": 7, "tipo": "Depilación", "cantidad": 1, "precio": 1500 }
+]

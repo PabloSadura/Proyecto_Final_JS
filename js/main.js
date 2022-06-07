@@ -13,65 +13,12 @@ const passIngresado = document.querySelector("#password");
 const checkbox = document.querySelector("check");
 const saludo = document.querySelector("#bienvenida");
 const power = document.querySelector("#power");
-
-// Objeto Planes
-function planes(
-  id,
-  tipo,
-  cantidad,
-  mesoterapia,
-  pilling,
-  botox,
-  depilacion,
-  precio
-) {
-  this.id = id;
-  this.tipo = tipo;
-  this.cantidad = cantidad;
-  this.mesoterapia = mesoterapia;
-  this.pilling = pilling;
-  this.botox = botox;
-  this.depilacion = depilacion;
-  this.precio = precio;
-}
-// // objeto sesiones
-function sesiones(id, tipo, cantidad, precio) {
-  this.id = id;
-  this.tipo = tipo;
-  this.cantidad = cantidad;
-  this.precio = precio;
-}
+const consultaPlan = [];
 // array planes
-const arrayPlanes = [
-  new planes(1, "Plan Basico", 1, 5, 5, 0, 10, 35000),
-  new planes(2, "Plan Intermedio", 1, 10, 5, 5, 15, 55000),
-  new planes(3, "Plan Premium", 1, 20, 10, 10, 30, 85000),
-];
-const arraySesiones = [
-  new sesiones(4, "Mesoterapia", 1, 3500),
-  new sesiones(5, "Pilling", 1, 2000),
-  new sesiones(6, "Botox", 1, 4000),
-  new sesiones(7, "Depilación", 1, 1500),
-];
-let totalFinal;
-let contador = 0;
-let nombre;
-let planesElegidos = []; // array para el carrito
-const consultaPlan = [...arrayPlanes, ...arraySesiones];
-
-// sumar carrito
-function sumarCarrito(array) {
-  let total = 0;
-  array.forEach((array) => {
-    total += array.cantidad * array.precio;
-  });
-
-  return total;
-}
-
-// Muestro los planes
-const mostrarPlanes = () => {
-  arrayPlanes.forEach((el) => {
+const responsePlanes = async () => {
+  const resp = await fetch("./../js/planes.json");
+  const data = await resp.json();
+  data.forEach((el) => {
     $planes.innerHTML += `<article class="col-md-3 mt-4 card-planes item me-3">
       <h4 class="text-center">${el.tipo}</h4>
       <h5 class="text-center">$${el.precio}</h5>
@@ -85,18 +32,37 @@ const mostrarPlanes = () => {
       <button class="css-button-retro--sand mb-2 btn${el.id} planes"data-id="${el.id}">Agregar</button></article>
       </div>`;
   });
+  consultaPlan.push(...data);
 };
-mostrarPlanes();
-// Muestro las sesiones
-const mostrarSesiones = () => {
-  arraySesiones.forEach((el) => {
+responsePlanes();
+
+const responseSesiones = async () => {
+  const sesiones = await fetch("./../js/sesiones.json");
+  const dataSesiones = await sesiones.json();
+  dataSesiones.forEach((el) => {
     $sesiones.innerHTML += `<div class="col-md-2 mt-4 me-3 card-planes item">
           <h4 class="text-center">${el.tipo}</h4>
           <h5 class="text-center">$${el.precio} x sesión</h5>
           <div class="text-center"><button class="css-button-retro--sand mb-2 btn${el.id} planes" data-id="${el.id}">Agregar</button></div>`;
   });
+  consultaPlan.push(...dataSesiones);
 };
-mostrarSesiones();
+responseSesiones();
+
+let totalFinal;
+let contador = 0;
+let nombre;
+let planesElegidos = []; // array para el carrito
+
+// sumar carrito
+function sumarCarrito(array) {
+  let total = 0;
+  array.forEach((array) => {
+    total += array.cantidad * array.precio;
+  });
+
+  return total;
+}
 
 function abrirCarrito(e) {
   if (e.target.matches("#carrito")) {

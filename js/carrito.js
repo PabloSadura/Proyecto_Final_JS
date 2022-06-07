@@ -14,50 +14,22 @@ const power = document.querySelector("#power");
 const productos = document.querySelector("#productos");
 const credito = document.querySelector(".credito");
 const tarjeta_credito = document.querySelector("#tarjeta");
-// Objeto Planes
-function planes(
-  id,
-  tipo,
-  cantidad,
-  mesoterapia,
-  pilling,
-  botox,
-  depilacion,
-  precio
-) {
-  this.id = id;
-  this.tipo = tipo;
-  this.cantidad = cantidad;
-  this.mesoterapia = mesoterapia;
-  this.pilling = pilling;
-  this.botox = botox;
-  this.depilacion = depilacion;
-  this.precio = precio;
-}
-// // objeto sesiones
-function sesiones(id, tipo, cantidad, precio) {
-  this.id = id;
-  this.tipo = tipo;
-  this.cantidad = cantidad;
-  this.precio = precio;
-}
-// array planes
-const arrayPlanes = [
-  new planes(1, "Plan Basico", 1, 5, 5, 0, 10, 35000),
-  new planes(2, "Plan Intermedio", 1, 10, 5, 5, 15, 55000),
-  new planes(3, "Plan Premium", 1, 20, 10, 10, 30, 85000),
-];
-const arraySesiones = [
-  new sesiones(4, "Mesoterapia", 1, 3500),
-  new sesiones(5, "Pilling", 1, 2000),
-  new sesiones(6, "Botox", 1, 4000),
-  new sesiones(7, "Depilación", 1, 1500),
-];
-let totalFinal;
+const planes = async () => {
+  const planes = await fetch("./../js/planes.json");
+  const dataPlanes = await planes.json();
+  consultaPlan.push(...dataPlanes);
+};
+
+const sesiones = async () => {
+  const sesiones = await fetch("./../js/sesiones.json");
+  const dataSesiones = await sesiones.json();
+  consultaPlan.push(...dataSesiones);
+};
+
+let totalFinal = 0;
 let contador = 0;
 let nombre;
 let planesElegidos = []; // array para el carrito
-const consultaPlan = [...arrayPlanes, ...arraySesiones];
 
 // sumar carrito
 function sumarCarrito(array) {
@@ -103,6 +75,7 @@ function cerrarSesion(e) {
     cantidadCarrito(contador);
   }
   mostrarCarrito();
+  mostrarTotal();
   powerAdd();
 }
 
@@ -124,11 +97,13 @@ function quitarCant(e) {
       );
       planesElegidos.splice(p, 1);
       contador--;
+      mostrarTotal();
       cantidadCarrito(contador);
       guardarEnStorage();
     } else {
       p.cantidad--;
       guardarEnStorage();
+      mostrarTotal();
     }
   }
 }
@@ -139,6 +114,7 @@ function agregarCant(e) {
     );
     p.cantidad++;
     guardarEnStorage();
+    mostrarTotal();
   }
 }
 
@@ -247,6 +223,7 @@ function confirmacion(e) {
       contador--;
       cantidadCarrito(contador);
       guardarEnStorage();
+      mostrarTotal();
       Swal.fire(
         "Eliminado!",
         "El producto fue eliminado con exito.",
@@ -266,123 +243,70 @@ document.addEventListener("click", (e) => {
   eliminarTodo(e);
   cerrarSesion(e);
   comprar(e);
-  console.log(e.target);
   tarjeta(e);
   efectivo(e);
 });
 
 function tarjeta(e) {
   if (e.target.matches("#tarjeta")) {
-    credito.innerHTML = `
-        <div class="box_card mt-4">
-                <div class="tarjeta_credito">
-                  <div id="tipo_tarjeta">
-                    <img
-                      src="../img/tarjeta-de-credito.png"
-                      alt=""
-                      class="mt-1 ms-3"
-                    />
-                  </div>
-                  <p id="numero_tarjeta" class="text-center fs-4 mt-2 fw-bolder">
-                  **** **** **** ****
-                  </p>
-                  <div class="d-flex justify-content-evenly">
-                    <p id="nombre_apellido" class="fw-bolder">***** *******</p>
-                    <p id="dni" class="fw-bolder">********</p>
-                  </div>
-                  <div class="fechas d-flex justify-content-evenly">
-                    <div id="fecha_desde" class="fw-bolder">
-                      <p>Desde: <span id="desde">**/**</span></p>
-                    </div>
-                    <p id="fecha_hasta" class="fw-bolder">
-                      <p>Hasta: <span id="hasta">**/**</span></p></p>
-                  </div>
-                </div>
-              </div>
-              <div class="text-center mt-4">
-                <h5>Ingrese los datos de la tarjeta</h5>
-              </div>
-              <div>
-              <label for="name" class="ms-3"
-                >Nombre y Apellido:
-                <input
-                  type="text"
-                  name="name"
-                  id="name_target"
-                  class="ms-4 border-bottom border-top-0 border-start-0 border-end-0"
-                />
-              </label>
-              <label for="name" class="ms-3"
-                >D.N.I.:
-                <input
-                  type="text"
-                  name="dni"
-                  id="dni_target"
-                  class="ms-4 border-bottom border-top-0 border-start-0 border-end-0"
-                />
-              </label>
-              </div>
-              <div>
-              <label for="number" class="ms-3"
-                >N° de tarjeta:
-                <input
-                  type="number"
-                  name="number"
-                  id="numbers"
-                  class="ms-4 border-bottom border-top-0 border-start-0 border-end-0"
-                />
-              </label>
-              </div>
-              <div class="d-flex">
-              <label for="date_desde" class="ms-3"
-                >Fecha de Desde:
-                <input
-                  type="number"
-                  name="desde"
-                  id="date_desde"
-                  class=" border-bottom border-top-0 border-start-0 border-end-0"
-                />
-              </label>
-              <label for="date_hasta" class="ms-3"
-                >Fecha de Hasta:
-                <input
-                  type="number"
-                  name="hasta"
-                  id="date_hasta"
-                  class="border-bottom border-top-0 border-start-0 border-end-0"
-                />
-              </label></div>`;
-  }
-  const numeroTarjeta = document.querySelector("#numero_tarjeta");
-  const numbers = document.querySelector("#numbers");
-  const nombreApellido = document.querySelector("#nombre_apellido");
-  const nameTarget = document.querySelector("#name_target");
-  const documento = document.querySelector("#dni_target");
-  const dni = document.querySelector("#dni");
-  const desde = document.querySelector("#desde");
-  const hasta = document.querySelector("#hasta");
-  const dateDesde = document.querySelector("#date_desde");
-  const dateHasta = document.querySelector("#date_hasta");
+    credito.innerHTML = `<!-- CREDIT CARD-->
+    <div class="d-flex justify-content-center mt-4">
+        <form id="CreateForm" class="tarjeta_credito p-4">
+            <div class="d-flex justify-content-around mb-4">
+                <?xml version="1.0" encoding="UTF-8"?>
+                <i class="fa-brands fa-cc-visa fa-2xl"></i>
+                <i class="fa-brands fa-cc-mastercard fa-2xl"></i>
+                <i class="fa-brands fa-cc-amex fa-2xl"></i>
+                <i class="fa-brands fa-cc-paypal fa-2xl"></i>
+            </div>
+            <div class="card-number">
+                <label class="mt-2">Número de Tarjeta</label>
+                <input id="creditCard" placeholder="**** **** **** ****" type="text" maxlength="19" class="bg-transparent border-bottom border-0">
+            </div>
+            <div class="">
+            <label class="mt-2">Nombre y Apellido</label>
+            <input id="card-name" placeholder="** ***" type="text" class="bg-transparent border-bottom border-0">
 
-  numbers.addEventListener("keyup", () => {
-    numeroTarjeta.innerText = numbers.value;
-  });
-  name_target.addEventListener("keyup", () => {
-    nombreApellido.innerText = nameTarget.value;
-  });
-  documento.addEventListener("keyup", () => {
-    dni.innerText = documento.value;
-  });
-  dateDesde.addEventListener("keyup", () => {
-    desde.innerText = dateDesde.value;
-  });
-  dateHasta.addEventListener("keyup", () => {
-    hasta.innerText = dateHasta.value;
-  });
+        </div>
+            <div class="d-flex justify-content-evenly me-2">
+                <div class="">
+                    <label class="mt-2">Fecha Vto.</label>
+                    <input id="card-exp" placeholder="**/**" type="text" maxlength="5" class="bg-transparent border-bottom border-0">
+  
+                </div>
+                <div class="">
+                    <label class="mt-2">CCV</label>
+                    <input id="card-ccv" placeholder="*" type="text" maxlength="3" class="bg-transparent border-bottom border-0">
+  
+                </div>
+            </div>
+        </form>
+    </div>`;
+  }
 }
+
+const creditCard = document.querySelector("#creditCard");
+contar = 0;
+document.addEventListener("keyup", (e) => {
+  if (e.target.matches("#creditCard")) {
+    contar++;
+    console.log(e.target.value);
+    if (contar === 4) {
+      e.target.value.replace(/[^a-z0-9]+/gi, "").replace(/(.{4})/g, "$1 ");
+    }
+  }
+});
 
 function efectivo(e) {
   if (e.target.matches("#efectivo")) {
     credito.innerHTML = "";
   }
 }
+
+mostrarTotal = () => {
+  totalFinal = sumarCarrito(planesElegidos);
+  const total = document.querySelector("#total");
+  total.textContent = `$ ${totalFinal}`;
+};
+
+mostrarTotal();

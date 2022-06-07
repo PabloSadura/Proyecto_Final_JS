@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "tipo": "Plan Basico",
+    "cantidad": 1,
+    "mesoterapia": 5,
+    "botox": 5,
+    "pilling": 0,
+    "depilacion": 10,
+    "precio": 35000
+  },
+  {
+    "id": 2,
+    "tipo": "Plan Intermedio",
+    "cantidad": 1,
+    "mesoterapia": 10,
+    "botox": 5,
+    "pilling": 5,
+    "depilacion": 15,
+    "precio": 55000
+  },
+  {
+    "id": 3,
+    "tipo": "Plan Premium",
+    "cantidad": 1,
+    "mesoterapia": 20,
+    "botox": 10,
+    "pilling": 10,
+    "depilacion": 30,
+    "precio": 85000
+  }
+]
