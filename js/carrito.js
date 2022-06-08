@@ -12,8 +12,8 @@ const checkbox = document.querySelector("check");
 const saludo = document.querySelector("#bienvenida");
 const power = document.querySelector("#power");
 const productos = document.querySelector("#productos");
-const credito = document.querySelector(".credito");
-const tarjeta_credito = document.querySelector("#tarjeta");
+const credito = document.querySelector(".contenedor");
+
 const planes = async () => {
   const planes = await fetch("./../js/planes.json");
   const dataPlanes = await planes.json();
@@ -243,63 +243,20 @@ document.addEventListener("click", (e) => {
   eliminarTodo(e);
   cerrarSesion(e);
   comprar(e);
-  tarjeta(e);
+  mostrarTarjeta(e);
   efectivo(e);
+  console.log(e.target);
 });
 
-function tarjeta(e) {
-  if (e.target.matches("#tarjeta")) {
-    credito.innerHTML = `<!-- CREDIT CARD-->
-    <div class="d-flex justify-content-center mt-4">
-        <form id="CreateForm" class="tarjeta_credito p-4">
-            <div class="d-flex justify-content-around mb-4">
-                <?xml version="1.0" encoding="UTF-8"?>
-                <i class="fa-brands fa-cc-visa fa-2xl"></i>
-                <i class="fa-brands fa-cc-mastercard fa-2xl"></i>
-                <i class="fa-brands fa-cc-amex fa-2xl"></i>
-                <i class="fa-brands fa-cc-paypal fa-2xl"></i>
-            </div>
-            <div class="card-number">
-                <label class="mt-2">Número de Tarjeta</label>
-                <input id="creditCard" placeholder="**** **** **** ****" type="text" maxlength="19" class="bg-transparent border-bottom border-0">
-            </div>
-            <div class="">
-            <label class="mt-2">Nombre y Apellido</label>
-            <input id="card-name" placeholder="** ***" type="text" class="bg-transparent border-bottom border-0">
-
-        </div>
-            <div class="d-flex justify-content-evenly me-2">
-                <div class="">
-                    <label class="mt-2">Fecha Vto.</label>
-                    <input id="card-exp" placeholder="**/**" type="text" maxlength="5" class="bg-transparent border-bottom border-0">
-  
-                </div>
-                <div class="">
-                    <label class="mt-2">CCV</label>
-                    <input id="card-ccv" placeholder="*" type="text" maxlength="3" class="bg-transparent border-bottom border-0">
-  
-                </div>
-            </div>
-        </form>
-    </div>`;
+function mostrarTarjeta(e) {
+  if (e.target.matches("#creditCard")) {
+    credito.classList.toggle("active");
   }
 }
 
-const creditCard = document.querySelector("#creditCard");
-contar = 0;
-document.addEventListener("keyup", (e) => {
-  if (e.target.matches("#creditCard")) {
-    contar++;
-    console.log(e.target.value);
-    if (contar === 4) {
-      e.target.value.replace(/[^a-z0-9]+/gi, "").replace(/(.{4})/g, "$1 ");
-    }
-  }
-});
-
 function efectivo(e) {
   if (e.target.matches("#efectivo")) {
-    credito.innerHTML = "";
+    credito.classList.remove("active");
   }
 }
 
@@ -310,3 +267,120 @@ mostrarTotal = () => {
 };
 
 mostrarTotal();
+
+const tarjeta = document.querySelector("#tarjeta"),
+  btnAbrirFomulario = document.querySelector("#btn-abrir-formulario"),
+  formulario = document.querySelector("#formulario-tarjeta"),
+  numeroTarjeta = document.querySelector("#tarjeta .numero"),
+  nombreTarjeta = document.querySelector("#tarjeta .nombre"),
+  logoMarca = document.querySelector("#logo-marca"),
+  firma = document.querySelector("#tarjeta .firma p"),
+  mesExpiracion = document.querySelector("#tarjeta .mes"),
+  yearExpiracion = document.querySelector("#tarjeta .year");
+ccv = document.querySelector("#tarjeta .ccv");
+
+const mostrarFrente = () => {
+  if (tarjeta.classList.contains("active")) {
+    tarjeta.classList.remove("active");
+  }
+};
+
+tarjeta.addEventListener("click", () => {
+  tarjeta.classList.toggle("active");
+});
+// boton abrir formulario
+btnAbrirFomulario.addEventListener("click", () => {
+  btnAbrirFomulario.classList.toggle("active");
+  formulario.classList.toggle("active");
+});
+// Seleccionar mes generado dinamicamente
+for (let i = 1; i <= 12; i++) {
+  let opcion = document.createElement("option");
+  opcion.value = i;
+  opcion.innerText = i;
+  formulario.selectMes.appendChild(opcion);
+}
+// * Select del año generado dinamicamente.
+const yearActual = new Date().getFullYear();
+for (let i = yearActual; i <= yearActual + 8; i++) {
+  let opcion = document.createElement("option");
+  opcion.value = i;
+  opcion.innerText = i;
+  formulario.selectYear.appendChild(opcion);
+}
+// input numeros de tarjeta
+formulario.inputNumero.addEventListener("keyup", (e) => {
+  let valorInput = e.target.value;
+  formulario.inputNumero.value = valorInput
+    // Eliminamos espacios en blanco
+    .replace(/\s/g, "")
+    // Eliminar las letras
+    .replace(/\D/g, "")
+    // Ponemos espacio cada cuatro numeros
+    .replace(/([0-9]{4})/g, "$1 ")
+    // Elimina el ultimo espaciado
+    .trim();
+
+  numeroTarjeta.textContent = valorInput;
+
+  if (valorInput == "") {
+    numeroTarjeta.textContent = "#### #### #### ####";
+
+    logoMarca.innerHTML = "";
+  }
+
+  if (valorInput[0] == 4) {
+    logoMarca.innerHTML = "";
+    const imagen = document.createElement("img");
+    imagen.src = "../img/visa.png";
+    logoMarca.appendChild(imagen);
+  } else if (valorInput[0] == 5) {
+    logoMarca.innerHTML = "";
+    const imagen = document.createElement("img");
+    imagen.src = "../img/mastercard.png";
+    logoMarca.appendChild(imagen);
+  }
+
+  // Volteamos la tarjeta para que el usuario vea el frente.
+  mostrarFrente();
+});
+// * Input nombre de tarjeta
+formulario.inputNombre.addEventListener("keyup", (e) => {
+  let valorInput = e.target.value;
+
+  formulario.inputNombre.value = valorInput.replace(/[0-9]/g, "");
+  nombreTarjeta.textContent = valorInput;
+  firma.textContent = valorInput;
+
+  if (valorInput == "") {
+    nombreTarjeta.textContent = "Jhon Doe";
+  }
+
+  mostrarFrente();
+});
+// * Select mes
+formulario.selectMes.addEventListener("change", (e) => {
+  mesExpiracion.textContent = e.target.value;
+  mostrarFrente();
+});
+
+// * Select Año
+formulario.selectYear.addEventListener("change", (e) => {
+  yearExpiracion.textContent = e.target.value.slice(2);
+  mostrarFrente();
+});
+
+// * CCV
+formulario.inputCCV.addEventListener("keyup", () => {
+  if (!tarjeta.classList.contains("active")) {
+    tarjeta.classList.toggle("active");
+  }
+
+  formulario.inputCCV.value = formulario.inputCCV.value
+    // Eliminar los espacios
+    .replace(/\s/g, "")
+    // Eliminar las letras
+    .replace(/\D/g, "");
+
+  ccv.textContent = formulario.inputCCV.value;
+});
