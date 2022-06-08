@@ -15,13 +15,13 @@ const productos = document.querySelector("#productos");
 const credito = document.querySelector(".contenedor");
 
 const planes = async () => {
-  const planes = await fetch("../js/planes.json");
+  const planes = await fetch("../planes.json");
   const dataPlanes = await planes.json();
   consultaPlan.push(...dataPlanes);
 };
 
 const sesiones = async () => {
-  const sesiones = await fetch("./../js/sesiones.json");
+  const sesiones = await fetch("../sesiones.json");
   const dataSesiones = await sesiones.json();
   consultaPlan.push(...dataSesiones);
 };
