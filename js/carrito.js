@@ -328,7 +328,6 @@ formulario.inputNumero.addEventListener("keyup", (e) => {
 
     logoMarca.innerHTML = "";
   }
-
   if (valorInput[0] == 4) {
     logoMarca.innerHTML = "";
     const imagen = document.createElement("img");
@@ -338,6 +337,11 @@ formulario.inputNumero.addEventListener("keyup", (e) => {
     logoMarca.innerHTML = "";
     const imagen = document.createElement("img");
     imagen.src = "../img/mastercard.png";
+    logoMarca.appendChild(imagen);
+  } else if (valorInput[0] == 3) {
+    logoMarca.innerHTML = "";
+    const imagen = document.createElement("img");
+    imagen.src = "../img/american.png";
     logoMarca.appendChild(imagen);
   }
 
