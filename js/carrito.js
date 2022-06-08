@@ -15,7 +15,7 @@ const productos = document.querySelector("#productos");
 const credito = document.querySelector(".contenedor");
 
 const planes = async () => {
-  const planes = await fetch("./../js/planes.json");
+  const planes = await fetch("../js/planes.json");
   const dataPlanes = await planes.json();
   consultaPlan.push(...dataPlanes);
 };
@@ -82,10 +82,10 @@ function cerrarSesion(e) {
 function mostrarCarrito() {
   productos.innerHTML = "";
   planesElegidos.forEach((el) => {
-    productos.innerHTML += `<div class="m-4 p-4 border rounded-3 shadow d-flex justify-content-evenly "><div>#${el.id}</div><div>${el.tipo}</div>
-        <div class="text-center ms-4"><i class="bi bi-dash-circle resta me-1"data-id="${el.id}"></i> ${el.cantidad} <i class="bi bi-plus-circle suma ms-1"data-id="${el.id}"></i></div>
-        <div class="ms-4">$${el.precio}</div>
-        <div><i class="bi bi-trash trash ms-4"data-id="${el.id}"></i></div</div>`;
+    productos.innerHTML += `<div class="col-md-12 p-4 mb-4 border rounded-3 shadow d-sm-flex justify-content-sm-evenly text-center"><div class="fw-bold">#${el.id}</div><div>${el.tipo}</div>
+        <div class=""><i class="bi bi-dash-circle resta me-1"data-id="${el.id}"></i> ${el.cantidad} <i class="bi bi-plus-circle suma ms-1"data-id="${el.id}"></i></div>
+        <div class="">$${el.precio}</div>
+        <div><i class="bi bi-trash trash"data-id="${el.id}"></i></div</div>`;
   });
 }
 function quitarCant(e) {
