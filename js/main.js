@@ -73,7 +73,7 @@ function abrirCarrito(e) {
   }
 }
 function abrirPopup(e) {
-  e.target.matches("#bienvenida") && popup.classList.add("active");
+  e.target.matches("#bienvenida") && popup.classList.toggle("active");
 }
 function cerrarPopup(e) {
   e.target.matches(".close-btn") && popup.classList.remove("active");
