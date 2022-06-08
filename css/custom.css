@@ -12353,7 +12353,7 @@ p {
 
 .tarjeta {
   width: 100%;
-  max-width: 550px;
+  max-width: 500px;
   position: relative;
   color: #fff;
   -webkit-transition: 1.3s ease;
@@ -12580,10 +12580,6 @@ p {
 
 .formulario-tarjeta .expira {
   width: 100%;
-}
-
-.formulario-tarjeta .ccv {
-  min-width: 100px;
 }
 
 .formulario-tarjeta .grupo-select {

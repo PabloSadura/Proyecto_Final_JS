@@ -164,6 +164,7 @@ function recuperarDatoNombre(dato) {
   powerAdd();
 }
 recuperarDatoNombre(JSON.parse(localStorage.getItem("usuario")));
+
 function recuperarDatoCarrito(dato) {
   if (dato) {
     planesElegidos = dato;
@@ -192,7 +193,6 @@ function comprar(e) {
         planesElegidos.forEach((el) => (el.cantidad = 1));
         planesElegidos = [];
         contador = 0;
-        console.log(contador);
         cantidadCarrito(contador);
         mostrarCarrito();
         Swal.fire("Felicitaciones!", "Compra realizada con éxito.", "success");
@@ -267,6 +267,8 @@ mostrarTotal = () => {
 };
 
 mostrarTotal();
+
+// Tarjeta de Credito
 
 const tarjeta = document.querySelector("#tarjeta"),
   btnAbrirFomulario = document.querySelector("#btn-abrir-formulario"),
@@ -388,22 +390,3 @@ formulario.inputCCV.addEventListener("keyup", () => {
 
   ccv.textContent = formulario.inputCCV.value;
 });
-
-function mandarMail() {
-  emailjs.send("service_akw3h2a", "template_jra2zyn", {
-    from_name: "ET-Soluciones",
-    to_name: document.querySelector("#nombre").value,
-    email: document.querySelector("#email").value,
-    message:
-      `Hemos recibido tu pedido! El número de seguimiento es: #` +
-      nroPedido +
-      `. Te lo enviaremos a ` +
-      document.querySelector("#domicilio").value +
-      ` Nº ` +
-      document.querySelector("#numeracion").value +
-      `, ` +
-      document.querySelector("#localidad").value +
-      `. Lo estarás recibiendo dentro de los próximos 10 días y el importe total de tu compra es: ` +
-      formatoMoneda(totalGeneral()),
-  });
-}
