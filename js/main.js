@@ -16,7 +16,7 @@ const power = document.querySelector("#power");
 const consultaPlan = [];
 // array planes
 const responsePlanes = async () => {
-  const resp = await fetch("planes.json");
+  const resp = await fetch("js/planes.json");
   const data = await resp.json();
   data.forEach((el) => {
     $planes.innerHTML += `<article class="col-md-3 mt-4 card-planes item me-3">
@@ -37,7 +37,7 @@ const responsePlanes = async () => {
 responsePlanes();
 
 const responseSesiones = async () => {
-  const sesiones = await fetch("sesiones.json");
+  const sesiones = await fetch("js/sesiones.json");
   const dataSesiones = await sesiones.json();
   dataSesiones.forEach((el) => {
     $sesiones.innerHTML += `<div class="col-md-2 mt-4 me-3 card-planes item">
