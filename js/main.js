@@ -128,14 +128,14 @@ function agregarCarrito(e) {
         duration: 2000,
         newWindow: true,
         close: true,
-        gravity: "top", // `top` or `bottom`
-        position: "center", // `left`, `center` or `right`
-        stopOnFocus: true, // Prevents dismissing of toast on hover
+        gravity: "top",
+        position: "center",
+        stopOnFocus: true,
         style: {
           background:
             " linear-gradient(to right, rgb(20, 20, 20), rgba(0, 0, 0, 0.377))",
         },
-        onClick: function () {}, // Callback after click
+        onClick: function () {},
       }).showToast();
     }
   }
