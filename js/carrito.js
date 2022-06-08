@@ -15,13 +15,13 @@ const productos = document.querySelector("#productos");
 const credito = document.querySelector(".contenedor");
 
 const planes = async () => {
-  const planes = await fetch("../planes.json");
+  const planes = await fetch("./planes.json");
   const dataPlanes = await planes.json();
   consultaPlan.push(...dataPlanes);
 };
 
 const sesiones = async () => {
-  const sesiones = await fetch("../sesiones.json");
+  const sesiones = await fetch("./sesiones.json");
   const dataSesiones = await sesiones.json();
   consultaPlan.push(...dataSesiones);
 };
@@ -388,3 +388,22 @@ formulario.inputCCV.addEventListener("keyup", () => {
 
   ccv.textContent = formulario.inputCCV.value;
 });
+
+function mandarMail() {
+  emailjs.send("service_akw3h2a", "template_jra2zyn", {
+    from_name: "ET-Soluciones",
+    to_name: document.querySelector("#nombre").value,
+    email: document.querySelector("#email").value,
+    message:
+      `Hemos recibido tu pedido! El número de seguimiento es: #` +
+      nroPedido +
+      `. Te lo enviaremos a ` +
+      document.querySelector("#domicilio").value +
+      ` Nº ` +
+      document.querySelector("#numeracion").value +
+      `, ` +
+      document.querySelector("#localidad").value +
+      `. Lo estarás recibiendo dentro de los próximos 10 días y el importe total de tu compra es: ` +
+      formatoMoneda(totalGeneral()),
+  });
+}
