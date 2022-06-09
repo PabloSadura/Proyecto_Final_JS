@@ -267,9 +267,10 @@ document.addEventListener("click", (e) => {
   comprar(e);
   mostrarTarjeta(e);
   efectivo(e);
-  console.log(e.target);
+  girarTarjeta(e);
+  volverFrente(e);
 });
-
+// hago aparecer la tarjeta
 function mostrarTarjeta(e) {
   if (e.target.matches("#creditCard")) {
     credito.classList.toggle("active");
@@ -291,14 +292,15 @@ mostrarTotal = () => {
 mostrarTotal();
 
 const mostrarFrente = () => {
-  if (tarjeta.classList.contains("active")) {
-    tarjeta.classList.remove("active");
-  }
+  tarjeta.classList.contains("active") && tarjeta.classList.remove("active");
 };
+// giro la tarjeta al dorso
+girarTarjeta = (e) =>
+  e.target.matches(".delantera") && tarjeta.classList.toggle("active");
+// giro la tarjeta hacia atras
+volverFrente = (e) =>
+  e.target.matches(".contenedor") && tarjeta.classList.remove("active");
 
-tarjeta.addEventListener("click", () => {
-  tarjeta.classList.toggle("active");
-});
 // boton abrir formulario
 btnAbrirFomulario.addEventListener("click", () => {
   btnAbrirFomulario.classList.toggle("active");
@@ -331,28 +333,22 @@ formulario.inputNumero.addEventListener("keyup", (e) => {
     .replace(/([0-9]{4})/g, "$1 ")
     // Elimina el ultimo espaciado
     .trim();
-
+  // reinicio la tarjeta
   numeroTarjeta.textContent = valorInput;
-
   if (valorInput == "") {
     numeroTarjeta.textContent = "#### #### #### ####";
-
     logoMarca.innerHTML = "";
   }
-  if (valorInput[0] == 4) {
+  // busco las imagenes de la empresa de la tarjeta
+  if (valorInput) {
     logoMarca.innerHTML = "";
     const imagen = document.createElement("img");
-    imagen.src = "../img/visa.png";
-    logoMarca.appendChild(imagen);
-  } else if (valorInput[0] == 5) {
-    logoMarca.innerHTML = "";
-    const imagen = document.createElement("img");
-    imagen.src = "../img/mastercard.png";
-    logoMarca.appendChild(imagen);
-  } else if (valorInput[0] == 3) {
-    logoMarca.innerHTML = "";
-    const imagen = document.createElement("img");
-    imagen.src = "../img/american.png";
+    for (let i = 1; i < 10; i++) {
+      if (valorInput[0] == i) {
+        console.log(i);
+        imagen.src = `../img/${i}.png`;
+      }
+    }
     logoMarca.appendChild(imagen);
   }
 
@@ -362,15 +358,12 @@ formulario.inputNumero.addEventListener("keyup", (e) => {
 // * Input nombre de tarjeta
 formulario.inputNombre.addEventListener("keyup", (e) => {
   let valorInput = e.target.value;
-
   formulario.inputNombre.value = valorInput.replace(/[0-9]/g, "");
   nombreTarjeta.textContent = valorInput;
   firma.textContent = valorInput;
-
   if (valorInput == "") {
     nombreTarjeta.textContent = "Jhon Doe";
   }
-
   mostrarFrente();
 });
 // * Select mes
@@ -387,9 +380,7 @@ formulario.selectYear.addEventListener("change", (e) => {
 
 // * CCV
 formulario.inputCCV.addEventListener("keyup", () => {
-  if (!tarjeta.classList.contains("active")) {
-    tarjeta.classList.toggle("active");
-  }
+  !tarjeta.classList.contains("active") && tarjeta.classList.toggle("active");
 
   formulario.inputCCV.value = formulario.inputCCV.value
     // Eliminar los espacios
