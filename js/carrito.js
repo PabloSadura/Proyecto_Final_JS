@@ -13,6 +13,18 @@ const saludo = document.querySelector("#bienvenida");
 const power = document.querySelector("#power");
 const productos = document.querySelector("#productos");
 const credito = document.querySelector(".contenedor");
+// Tarjeta de Credito
+
+const tarjeta = document.querySelector("#tarjeta"),
+  btnAbrirFomulario = document.querySelector("#btn-abrir-formulario"),
+  formulario = document.querySelector("#formulario-tarjeta"),
+  numeroTarjeta = document.querySelector("#tarjeta .numero"),
+  nombreTarjeta = document.querySelector("#tarjeta .nombre"),
+  logoMarca = document.querySelector("#logo-marca"),
+  firma = document.querySelector("#tarjeta .firma p"),
+  mesExpiracion = document.querySelector("#tarjeta .mes"),
+  yearExpiracion = document.querySelector("#tarjeta .year");
+ccv = document.querySelector("#tarjeta .ccv");
 
 const planes = async () => {
   const planes = await fetch("planes.json");
@@ -178,26 +190,36 @@ function guardarEnStorage() {
     localStorage.setItem("carrito", JSON.stringify(planesElegidos));
 }
 recuperarDatoCarrito(JSON.parse(localStorage.getItem("carrito")));
+
+// Boton finalizar compra
 function comprar(e) {
   if (e.target.matches("#comprar")) {
-    Swal.fire({
-      title: "Esta seguro que desea realizar la compra?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Si, comprar!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        localStorage.removeItem("carrito");
-        planesElegidos.forEach((el) => (el.cantidad = 1));
-        planesElegidos = [];
-        contador = 0;
-        cantidadCarrito(contador);
-        mostrarCarrito();
-        Swal.fire("Felicitaciones!", "Compra realizada con éxito.", "success");
-      }
-    });
+    if (!contador) {
+      Swal.fire("Error!", "No hay productos en el carrito", "error");
+    } else {
+      Swal.fire({
+        title: "Esta seguro que desea realizar la compra?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, comprar!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          localStorage.removeItem("carrito");
+          planesElegidos.forEach((el) => (el.cantidad = 1));
+          planesElegidos = [];
+          contador = 0;
+          cantidadCarrito(contador);
+          mostrarCarrito();
+          Swal.fire(
+            "Felicitaciones!",
+            "Compra realizada con éxito.",
+            "success"
+          );
+        }
+      });
+    }
   }
 }
 
@@ -267,19 +289,6 @@ mostrarTotal = () => {
 };
 
 mostrarTotal();
-
-// Tarjeta de Credito
-
-const tarjeta = document.querySelector("#tarjeta"),
-  btnAbrirFomulario = document.querySelector("#btn-abrir-formulario"),
-  formulario = document.querySelector("#formulario-tarjeta"),
-  numeroTarjeta = document.querySelector("#tarjeta .numero"),
-  nombreTarjeta = document.querySelector("#tarjeta .nombre"),
-  logoMarca = document.querySelector("#logo-marca"),
-  firma = document.querySelector("#tarjeta .firma p"),
-  mesExpiracion = document.querySelector("#tarjeta .mes"),
-  yearExpiracion = document.querySelector("#tarjeta .year");
-ccv = document.querySelector("#tarjeta .ccv");
 
 const mostrarFrente = () => {
   if (tarjeta.classList.contains("active")) {
