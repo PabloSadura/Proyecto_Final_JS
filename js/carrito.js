@@ -343,7 +343,7 @@ formulario.inputNumero.addEventListener("keyup", (e) => {
   if (valorInput) {
     logoMarca.innerHTML = "";
     const imagen = document.createElement("img");
-    for (let i = 1; i < 10; i++) {
+    for (let i = 0; i < 10; i++) {
       if (valorInput[0] == i) {
         console.log(i);
         imagen.src = `../img/${i}.png`;
